@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A-Bullrager</title>
+<meta name="description" content="A-Bullrager — 本地优先的 AI 写作工具与桌面小工具。">
+<meta property="og:title" content="A-Bullrager">
+<meta property="og:description" content="本地优先的 AI 写作工具与桌面小工具。">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231d1d1f'/%3E%3Ctext x='16' y='22' font-family='-apple-system,Helvetica,sans-serif' font-size='15' font-weight='600' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  color-scheme: light;
+  --bg:#ffffff;
+  --bg-alt:#f5f5f7;
+  --surface:#ffffff;
+  --surface-2:#f5f5f7;
+  --text:#1d1d1f;
+  --muted:#6e6e73;
+  --muted-2:#86868b;
+  --line:rgba(0,0,0,.08);
+  --accent:#0071e3;
+  --accent-soft:#e8f2fd;
+  --grad:linear-gradient(94deg,#0071e3 0%,#3ea6ff 100%);
+  --shadow:0 28px 70px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.04);
+  --r-lg:28px;
+  --r-md:18px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    color-scheme: dark;
+    --bg:#000000;
+    --bg-alt:#0b0b0d;
+    --surface:#1d1d1f;
+    --surface-2:#151517;
+    --text:#f5f5f7;
+    --muted:#a1a1a6;
+    --muted-2:#86868b;
+    --line:rgba(255,255,255,.12);
+    --accent:#2997ff;
+    --accent-soft:#0b2540;
+    --grad:linear-gradient(94deg,#2997ff 0%,#6ee7ff 100%);
+    --shadow:0 28px 70px rgba(0,0,0,.6),0 2px 8px rgba(0,0,0,.4);
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:17px;
+  line-height:1.5;
+  letter-spacing:-.012em;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--accent);color:#fff}
+.wrap{max-width:980px;margin:0 auto;padding:0 24px}
+
+/* nav */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:color-mix(in srgb,var(--bg) 78%,transparent);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  max-width:980px;margin:0 auto;padding:0 24px;
+  height:50px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.logo{font-size:14px;font-weight:600;letter-spacing:-.01em}
+.nav-links{display:flex;gap:26px;font-size:12.5px;color:var(--muted)}
+.nav-links a{transition:color .2s var(--ease)}
+.nav-links a:hover{color:var(--text)}
+
+/* hero */
+.hero{text-align:center;padding-block:132px 96px}
+.eyebrow{
+  margin:0 0 18px;font-size:14px;font-weight:600;color:var(--accent);
+  letter-spacing:0;
+}
+h1{
+  margin:0 auto 22px;max-width:14em;
+  font-size:clamp(42px,7vw,80px);
+  line-height:1.06;font-weight:600;letter-spacing:-.035em;
+  text-wrap:balance;
+}
+.grad{
+  background:var(--grad);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.sub{
+  margin:0 auto 34px;max-width:24em;
+  font-size:clamp(18px,2.2vw,24px);line-height:1.45;
+  color:var(--muted);font-weight:400;letter-spacing:-.01em;text-wrap:pretty;
+}
+.cta{display:flex;justify-content:center;align-items:center;gap:22px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:12px 26px;border-radius:980px;
+  font-size:15px;font-weight:500;letter-spacing:-.01em;
+  transition:transform .2s var(--ease),background .2s var(--ease),opacity .2s var(--ease);
+}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{opacity:.88;transform:translateY(-1px)}
+.btn-link{color:var(--accent);padding:12px 2px}
+.btn-link:hover{text-decoration:underline;text-underline-offset:4px}
+
+/* feature */
+.feature{background:var(--bg-alt);padding:110px 0 120px}
+.feature-head{text-align:center;max-width:640px;margin:0 auto 56px}
+.tagline{
+  margin:0 0 14px;font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--muted-2);
+}
+h2{
+  margin:0 0 18px;font-size:clamp(30px,3.8vw,44px);
+  line-height:1.1;font-weight:600;letter-spacing:-.028em;text-wrap:balance;
+}
+.feature-head p.body{margin:0;font-size:18px;line-height:1.55;color:var(--muted);letter-spacing:-.01em}
+
+.mock-wrap{position:relative;max-width:760px;margin:0 auto}
+.mock-wrap::before{
+  content:"";position:absolute;inset:-8% -10% -14%;
+  background:radial-gradient(60% 60% at 50% 40%,rgba(0,113,227,.18),transparent 70%);
+  filter:blur(6px);pointer-events:none;
+}
+.mock{
+  position:relative;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.mock-top{
+  display:flex;align-items:center;gap:7px;
+  padding:14px 18px;border-bottom:1px solid var(--line);
+  background:var(--surface-2);
+}
+.mock-top i{width:11px;height:11px;border-radius:50%;background:var(--line);display:block}
+.mock-title{margin-left:10px;font-size:12px;font-weight:500;color:var(--muted-2);letter-spacing:0}
+.mock-main{display:grid;grid-template-columns:150px 1fr;min-height:240px}
+.mock-side{
+  display:flex;flex-direction:column;gap:2px;
+  padding:16px 12px;border-right:1px solid var(--line);
+  background:var(--surface-2);
+}
+.si{
+  padding:8px 12px;border-radius:9px;
+  font-size:13px;color:var(--muted);
+}
+.si.on{background:var(--bg);color:var(--text);font-weight:500;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.mock-panel{padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.mi{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:13px 16px;border-radius:12px;background:var(--surface-2);
+  font-size:14px;
+}
+.mi.now{background:var(--accent-soft)}
+.ch{font-weight:500;letter-spacing:0}
+.st{font-size:12px;color:var(--muted-2)}
+.mi.now .st{color:var(--accent);font-weight:500}
+
+/* projects */
+.projects{padding-block:110px 0}
+.section-head{margin:0 0 44px;max-width:600px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.card{
+  display:flex;flex-direction:column;
+  padding:32px;border-radius:var(--r-lg);
+  background:var(--bg-alt);border:1px solid transparent;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease);
+}
+.card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+.card-top{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.card .icon{
+  width:34px;height:34px;flex:none;border-radius:10px;
+  display:grid;place-items:center;
+  background:var(--bg);color:var(--muted);
+  transition:color .25s var(--ease);
+}
+.card:hover .icon{color:var(--accent)}
+.card .icon svg{width:19px;height:19px;display:block}
+.card h3{margin:0;font-size:22px;font-weight:600;letter-spacing:-.02em}
+.pill{
+  margin-left:auto;
+  padding:3px 10px;border-radius:980px;
+  font-size:11px;font-weight:500;letter-spacing:.02em;
+  color:var(--muted);background:color-mix(in srgb,var(--text) 6%,transparent);
+}
+.card p{margin:0 0 22px;font-size:15px;line-height:1.55;color:var(--muted);letter-spacing:-.01em}
+.card .more{margin-top:auto;font-size:14px;font-weight:500;color:var(--accent)}
+.card:hover .more{text-decoration:underline;text-underline-offset:4px}
+
+/* about */
+.about{background:var(--bg-alt);padding:110px 0}
+.about-inner{max-width:660px;margin:0 auto;text-align:center}
+.about h2{margin-bottom:24px}
+.about p{margin:0 auto;max-width:30em;font-size:19px;line-height:1.6;color:var(--muted);letter-spacing:-.01em}
+.stack{
+  margin:32px 0 0;font-size:13px;color:var(--muted-2);letter-spacing:.02em;
+}
+
+/* footer */
+footer{padding:40px 0 56px;border-top:1px solid var(--line);background:var(--bg)}
+.foot{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-size:12px;color:var(--muted-2);letter-spacing:0;
+}
+.foot a:hover{color:var(--text)}
+
+/* reveal */
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.js .reveal.in{opacity:1;transform:none}
+
+@media (max-width:720px){
+  body{font-size:16px}
+  .hero{padding-block:88px 64px}
+  .feature{padding:80px 0}
+  .projects{padding-block:80px 0}
+  .about{padding:80px 0}
+  .grid{grid-template-columns:1fr}
+  .card{padding:26px}
+  .mock-main{grid-template-columns:1fr}
+  .mock-side{flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid var(--line);padding:10px}
+  .si{white-space:nowrap}
+  .foot{flex-direction:column;align-items:flex-start;gap:6px}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .js .reveal{opacity:1;transform:none;transition:none}
+  .card,.btn{transition:none}
+  .card:hover{transform:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="/">A-Bullrager</a>
+    <div class="nav-links">
+      <a href="#work">项目</a>
+      <a href="#about">关于</a>
+      <a href="https://github.com/A-Bullrager" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <section class="hero wrap">
+    <p class="eyebrow">本地优先 · 数据不出机器</p>
+    <h1>让 AI 记得住<br><span class="grad">你的两百万字</span></h1>
+    <p class="sub">写长篇最怕的不是写不出来，是写到第&nbsp;180&nbsp;章，忘了第&nbsp;3&nbsp;章埋的那条线。</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#work">查看项目</a>
+      <a class="btn btn-link" href="https://github.com/A-Bullrager" target="_blank" rel="noopener">GitHub ›</a>
+    </div>
+  </section>
+
+  <section class="feature">
+    <div class="wrap">
+      <div class="feature-head reveal">
+        <p class="tagline">WEBNOVEL-WRITER</p>
+        <h2>上下文不丢，伏笔不忘。</h2>
+        <p class="body">逐章维护人物、设定与伏笔，往上接得住前文，往下铺得开新章。写到第&nbsp;180&nbsp;章，它仍然认得开头那条线。</p>
+      </div>
+
+      <div class="mock-wrap reveal">
+        <div class="mock">
+          <div class="mock-top">
+            <i></i><i></i><i></i>
+            <span class="mock-title">webnovel-writer</span>
+          </div>
+          <div class="mock-main">
+            <div class="mock-side">
+              <span class="si on">章节</span>
+              <span class="si">人物</span>
+              <span class="si">设定</span>
+              <span class="si">伏笔</span>
+            </div>
+            <div class="mock-panel">
+              <div class="mi"><span class="ch">第 179 章</span><span class="st">已归档</span></div>
+              <div class="mi now"><span class="ch">第 180 章</span><span class="st">写作中</span></div>
+              <div class="mi"><span class="ch">第 181 章</span><span class="st">待生成</span></div>
+              <div class="mi"><span class="ch">第 182 章</span><span class="st">待生成</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="projects wrap" id="work">
+    <div class="section-head reveal">
+      <h2>还有一些小工具。</h2>
+    </div>
+    <div class="grid">
+
+      <a class="card reveal" href="https://github.com/A-Bullrager/token-monitor" target="_blank" rel="noopener">
+        <div class="card-top">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 17.5a9 9 0 1 1 15 0"/><path d="M12 14l3.6-3.8"/></svg></span>
+          <h3>token-monitor</h3>
+          <span class="pill">原创</span>
+        </div>
+        <p>DeepSeek 额度仪表盘。按当前用量推算还能撑几天，数据只在你本机。</p>
+        <span class="more">查看仓库 ›</span>
+      </a>
+
+      <a class="card reveal" href="https://github.com/A-Bullrager/ai-desktop-pet" target="_blank" rel="noopener">
+        <div class="card-top">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="7" width="15" height="11" rx="5.5"/><path d="M9.5 12.5h.01M14.5 12.5h.01"/></svg></span>
+          <h3>ai-desktop-pet</h3>
+          <span class="pill">原创</span>
+        </div>
+        <p>用 Godot 写的桌面宠物，安静待在屏幕角落，陪你把这一段写完。</p>
+        <span class="more">查看仓库 ›</span>
+      </a>
+
+      <a class="card reveal" href="https://github.com/A-Bullrager/webnovel-writer" target="_blank" rel="noopener">
+        <div class="card-top">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18.5 4H7.5A2.5 2.5 0 0 0 5 6.5v13A2.5 2.5 0 0 0 7.5 22h11"/><path d="M5 19a2.5 2.5 0 0 1 2.5-2.5h11"/><path d="M9.5 4v6"/></svg></span>
+          <h3>webnovel-writer</h3>
+          <span class="pill">fork</span>
+        </div>
+        <p>面向两百万字量级的长篇写作系统，解决 AI 写作中的「遗忘」与「幻觉」。</p>
+        <span class="more">查看仓库 ›</span>
+      </a>
+
+      <a class="card reveal" href="https://github.com/A-Bullrager/inkos" target="_blank" rel="noopener">
+        <div class="card-top">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 8V5"/><path d="M9.5 13h.01M14.5 13h.01"/></svg></span>
+          <h3>inkos</h3>
+          <span class="pill">fork</span>
+        </div>
+        <p>自主写作 Agent：写、审、改三段循环，关键节点留人工把关。</p>
+        <span class="more">查看仓库 ›</span>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap about-inner reveal">
+      <h2>做自己会用的东西。</h2>
+      <p>技术栈比较杂，Python、JavaScript、GDScript、C++ 都写一点。偏爱本地优先——跑不跑得起来，不该取决于网络。</p>
+      <p class="stack">Python · JavaScript · GDScript · C++ · Godot · Obsidian</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 A-Bullrager</span>
+    <span>纯静态站点 · GitHub Pages 托管</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(el){ el.classList.add('in'); }); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{rootMargin:'0px 0px -12% 0px',threshold:0.12});
+  els.forEach(function(el){ io.observe(el); });
+})();
+</script>
+
+</body>
+</html>
