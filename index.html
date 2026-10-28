@@ -228,7 +228,23 @@ h2{
 .about{background:var(--bg-alt);padding:110px 0}
 .about-inner{max-width:660px;margin:0 auto;text-align:center}
 .about h2{margin-bottom:24px}
-.about p{margin:0 auto;max-width:30em;font-size:19px;line-height:1.6;color:var(--muted);letter-spacing:-.01em}
+.about p{margin:0 auto;max-width:32em;font-size:19px;line-height:1.7;color:var(--muted);letter-spacing:-.01em}
+.about p strong{color:var(--text);font-weight:600}
+.stats{
+  display:flex;justify-content:center;gap:56px;flex-wrap:wrap;
+  margin:48px 0 0;
+}
+.stat{display:flex;flex-direction:column;gap:6px}
+.stat b{
+  font-size:clamp(36px,4.6vw,52px);font-weight:600;line-height:1;letter-spacing:-.03em;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.stat span{font-size:13px;color:var(--muted-2);letter-spacing:.02em}
+.about-link{
+  display:inline-block;margin-top:44px;
+  font-size:15px;font-weight:500;color:var(--accent);
+}
+.about-link:hover{text-decoration:underline;text-underline-offset:4px}
 .stack{
   margin:32px 0 0;font-size:13px;color:var(--muted-2);letter-spacing:.02em;
 }
@@ -273,6 +289,7 @@ footer{padding:40px 0 56px;border-top:1px solid var(--line);background:var(--bg)
     <a class="logo" href="/">A-Bullrager</a>
     <div class="nav-links">
       <a href="#work">项目</a>
+      <a href="writing/ai-novel-120-chapters.html">文章</a>
       <a href="#about">关于</a>
       <a href="https://github.com/A-Bullrager" target="_blank" rel="noopener">GitHub</a>
     </div>
@@ -375,8 +392,14 @@ footer{padding:40px 0 56px;border-top:1px solid var(--line);background:var(--bg)
 
   <section class="about" id="about">
     <div class="wrap about-inner reveal">
-      <h2>做自己会用的东西。</h2>
-      <p>技术栈比较杂，Python、JavaScript、GDScript、C++ 都写一点。偏爱本地优先——跑不跑得起来，不该取决于网络。</p>
+      <h2>写小说的人，顺手做了工具。</h2>
+      <p>我用 AI 写了一部长篇网文。它<strong>会忘</strong>——写到第 3 章就丢了第 1 章的伏笔；它<strong>会乱</strong>——章节里混着元数据标记和进度条字符；它<strong>会穿帮</strong>——现代背景里冒出「2034年」。我没弃坑，而是把每个坑都做成了工具。最后，书写完了。</p>
+      <div class="stats">
+        <div class="stat"><b>120</b><span>章，完结</span></div>
+        <div class="stat"><b>57万</b><span>字</span></div>
+        <div class="stat"><b>11</b><span>个清理脚本</span></div>
+      </div>
+      <a class="about-link" href="writing/ai-novel-120-chapters.html">读完整的方法 →</a>
       <p class="stack">Python · JavaScript · GDScript · C++ · Godot · Obsidian</p>
     </div>
   </section>
