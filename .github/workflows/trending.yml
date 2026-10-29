@@ -2,8 +2,10 @@ name: Update GitHub Trending
 
 on:
   schedule:
-    # 每周一 01:00 UTC（北京时间 09:00）抓一次官方周榜
-    - cron: "0 1 * * 1"
+    # 每周日 14:00 UTC（北京时间周日 22:00）
+    # GitHub 的 since=weekly 是「抓取时刻往前 7 天」的滚动窗口，
+    # 放在周日晚上抓，覆盖的正好是上周一 → 本周日，符合自然周语义。
+    - cron: "0 14 * * 0"
   workflow_dispatch:
 
 permissions:

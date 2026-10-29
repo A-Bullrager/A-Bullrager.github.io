@@ -230,7 +230,7 @@ footer{padding:32px 0 48px;border-top:1px solid var(--line)}
   <div class="meta-line">
     <span>更新于 <b id="mUpdated">—</b></span>
     <span>已收录 <b id="mWeeks">—</b> 期</span>
-    <span>本期 <b id="mCount">—</b> 个仓库</span>
+    <span>数据自 <b id="mSince">—</b> 起</span>
   </div>
 </header>
 
@@ -251,10 +251,10 @@ footer{padding:32px 0 48px;border-top:1px solid var(--line)}
   <div class="list" id="list"></div>
   <div class="empty" id="empty" hidden>
     <b>还没有这一期的数据</b>
-    <p>周榜每周一自动抓取一次，攒够之后这里会自动出现月榜与年榜。</p>
+    <p>周榜每周日晚上自动抓取一次，攒够之后这里会自动出现月榜与年榜。</p>
   </div>
   <div class="foot-note">
-    <b>数据口径</b>：来源为 GitHub 官方 <a href="https://github.com/trending?since=weekly" target="_blank" rel="noopener">Trending 周榜</a>，每周一自动抓取并提交快照，不修改原始数值。月榜 / 年榜按该周期内各周「star 新增」累加排序，上榜次数同时展示。
+    <b>数据口径</b>：来源为 GitHub 官方 <a href="https://github.com/trending?since=weekly" target="_blank" rel="noopener">Trending 周榜</a>，每周日 22:00（北京时间）自动抓取并提交快照，不修改原始数值。月榜 / 年榜由周快照累加得出——每多一周，榜单才更接近真实热度，收录期数少于 4 期时仅供参考。
   </div>
 </main>
 
@@ -272,7 +272,7 @@ footer{padding:32px 0 48px;border-top:1px solid var(--line)}
 
   var elUpdated = document.getElementById('mUpdated');
   var elWeeks = document.getElementById('mWeeks');
-  var elCount = document.getElementById('mCount');
+  var elSince = document.getElementById('mSince');
   var elList = document.getElementById('list');
   var elNote = document.getElementById('note');
   var elEmpty = document.getElementById('empty');
@@ -371,7 +371,10 @@ footer{padding:32px 0 48px;border-top:1px solid var(--line)}
   function setNote(extra){
     var label = state.kind === 'week' ? '本期' : (state.kind === 'month' ? '本月' : '年度');
     var parts = [label + ' ' + state.period, '共 ' + state.items.length + ' 个仓库'];
-    if (state.kind !== 'week') parts.push('覆盖 ' + state.weeksCount + ' 期周榜');
+    if (state.kind !== 'week'){
+      parts.push('覆盖 ' + state.weeksCount + ' 期周榜');
+      if (state.weeksCount < 2) parts.push('样本仍在累积');
+    }
     if (extra) parts.push(extra);
     elNote.textContent = parts.join(' · ');
   }
@@ -433,7 +436,7 @@ footer{padding:32px 0 48px;border-top:1px solid var(--line)}
     state.index = index;
     elUpdated.textContent = index.updated_at;
     elWeeks.textContent = index.weeks.length;
-    elCount.textContent = index.weeks[0] ? index.weeks[0].count : 0;
+    elSince.textContent = index.weeks.length ? index.weeks[index.weeks.length - 1].date : '—';
     switchKind('week');
   }).catch(function(){
     elNote.textContent = '数据索引加载失败，请稍后刷新。';
