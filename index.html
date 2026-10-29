@@ -1,23 +1,23 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>A-Bullrager — 写完的人</title>
-<meta name="description" content="我用 AI 写了一部 120 章、57 万字的长篇，写到了完结。中途踩的每个坑，都被做成了工具。">
+<title>A-Bullrager — The one who finished</title>
+<meta name="description" content="I wrote a 120-chapter, 573,623-character web novel with AI — and finished it. Every problem I hit along the way became a tool.">
 <link rel="canonical" href="https://a-bullrager.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="A-Bullrager">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://a-bullrager.github.io/">
-<meta property="og:title" content="A-Bullrager — 写完的人">
-<meta property="og:description" content="120 章完结的长篇，和为了写完它而造的工具。">
+<meta property="og:title" content="A-Bullrager — The one who finished">
+<meta property="og:description" content="A finished 120-chapter novel, and the tools built to finish it.">
 <meta property="og:image" content="https://a-bullrager.github.io/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="A-Bullrager — 写完的人">
-<meta name="twitter:description" content="120 章完结的长篇，和为了写完它而造的工具。">
+<meta name="twitter:title" content="A-Bullrager — The one who finished">
+<meta name="twitter:description" content="A finished 120-chapter novel, and the tools built to finish it.">
 <meta name="twitter:image" content="https://a-bullrager.github.io/og.png">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
@@ -39,20 +39,20 @@
   "@type": "Person",
   "name": "A-Bullrager",
   "url": "https://a-bullrager.github.io/",
-  "description": "写完了一部 120 章长篇网文，并把过程中的坑做成了工具。",
+  "description": "Wrote a 120-chapter web novel to completion, and turned every problem along the way into a tool.",
   "sameAs": ["https://github.com/A-Bullrager"]
 }
 </script>
 <link rel="stylesheet" href="/assets/base.css">
 <style>
-/* ---------- 首屏 ---------- */
+/* ---------- hero ---------- */
 .hero{
   padding: 128px 0 72px;
   text-align: center;
 }
 .hero h1{ margin: 0 0 22px; }
 .hero h1 .dot{ color: var(--accent); }
-.hero .lede{ max-width: 26em; margin: 0 auto 34px; }
+.hero .lede{ max-width: 24em; margin: 0 auto 34px; }
 .hero-cta{
   display: flex;
   align-items: center;
@@ -61,7 +61,7 @@
   flex-wrap: wrap;
 }
 
-/* ---------- 证据 ---------- */
+/* ---------- proof ---------- */
 .proof{ padding: 96px 0 0; }
 .hm-card{
   position: relative;
@@ -127,7 +127,7 @@
 .hm-tip .w{ opacity: 0.7; }
 .hm-fallback{ margin: 10px 0 0; font-size: 14px; color: var(--text-2); }
 
-/* 数字 */
+/* numbers */
 .numbers{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -157,7 +157,7 @@
   color: var(--text-2);
 }
 
-/* ---------- 项目 ---------- */
+/* ---------- projects ---------- */
 .grid{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -216,7 +216,7 @@
 }
 .card:hover .more{ text-decoration: underline; text-underline-offset: 3px; }
 
-/* ---------- 入口卡 ---------- */
+/* ---------- entry cards ---------- */
 .entries{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -268,7 +268,7 @@
 }
 .entry:hover .arr{ background: var(--accent); color: #fff; }
 
-/* ---------- 实验室 ---------- */
+/* ---------- lab ---------- */
 .lab{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -316,8 +316,10 @@
 }
 .dice-row .lab-k{
   flex: none;
-  width: 32px;
-  font-size: 12px;
+  width: 62px;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   color: var(--text-3);
 }
 .dice-row .val{ font-size: 15px; line-height: 1.45; transition: opacity 0.1s; }
@@ -378,8 +380,8 @@
 .wc-note{ margin-top: 10px; font-size: 12px; color: var(--text-3); }
 .wc-note.ok{ color: var(--accent-text); font-weight: 600; }
 
-/* ---------- 关于 ---------- */
-.about-inner{ max-width: 680px; margin: 0 auto; text-align: center; }
+/* ---------- about ---------- */
+.about-inner{ max-width: 700px; margin: 0 auto; text-align: center; }
 .about p{
   margin: 20px 0 0;
   font-size: 19px;
@@ -418,12 +420,12 @@
   <div class="nav-inner">
     <a class="brand" href="/">A-Bullrager</a>
     <div class="nav-links">
-      <a href="#work">工具</a>
-      <a href="trending/">热点</a>
-      <a href="#lab">实验室</a>
-      <a href="writing/ai-novel-120-chapters.html">文章</a>
+      <a href="#work">Tools</a>
+      <a href="trending/">Trending</a>
+      <a href="#lab">Lab</a>
+      <a href="writing/ai-novel-120-chapters.html">Writing</a>
       <a class="nav-gh" href="https://github.com/A-Bullrager" target="_blank" rel="noopener">GitHub</a>
-      <button class="theme-btn" id="themeBtn" aria-label="切换深浅色主题">
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle light and dark theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.3 4.3l1.4 1.4M18.3 18.3l1.4 1.4M2.5 12h2M19.5 12h2M4.3 19.7l1.4-1.4M18.3 5.7l1.4-1.4"/></svg>
       </button>
@@ -435,42 +437,42 @@
 
   <section class="hero wrap">
     <p class="kicker">Writer × Builder</p>
-    <h1>写完的人<span class="dot">。</span></h1>
-    <p class="lede">我用 AI 写了一部 120 章、57 万字的长篇，并且写到了<span style="white-space:nowrap">完结</span>。中途踩的每个坑，都被我做成了工具。</p>
+    <h1>I finished it<span class="dot">.</span></h1>
+    <p class="lede">A 120-chapter web novel, written with AI from the first chapter to the last. Every problem I hit along the way became a tool.</p>
     <div class="hero-cta">
-      <a class="btn btn-primary" href="#proof">看看证据</a>
-      <a class="link-arrow" href="writing/ai-novel-120-chapters.html">读方法 <i>›</i></a>
+      <a class="btn btn-primary" href="#proof">See the proof</a>
+      <a class="link-arrow" href="writing/ai-novel-120-chapters.html">Read the method <i>›</i></a>
     </div>
   </section>
 
   <section class="proof wrap" id="proof">
     <div class="hm-card reveal">
-      <div class="hm-grid" id="hmGrid" role="img" aria-label="120 章章节热力图，每格代表一章，颜色深浅对应该章字数"></div>
+      <div class="hm-grid" id="hmGrid" role="img" aria-label="Heatmap of 120 chapters, one cell per chapter, darker cells are longer chapters"></div>
       <div class="hm-tip" id="hmTip"></div>
       <div class="hm-legend">
-        <span>字少</span>
+        <span>Shorter</span>
         <i class="sw" style="background:var(--hm-0)"></i>
         <i class="sw" style="background:var(--hm-1)"></i>
         <i class="sw" style="background:var(--hm-2)"></i>
         <i class="sw" style="background:var(--hm-3)"></i>
-        <span>字多</span>
+        <span>Longer</span>
         <span class="gap"></span>
-        <span>共 120 章 · 已完结</span>
+        <span>120 chapters · complete</span>
       </div>
-      <noscript><p class="hm-fallback">120 章 · 575,686 字 · 完结（启用 JavaScript 可查看逐章热力图）</p></noscript>
+      <noscript><p class="hm-fallback">120 chapters · 573,623 characters · complete (enable JavaScript to see the per-chapter heatmap)</p></noscript>
     </div>
 
     <div class="numbers reveal">
-      <div class="num"><b data-count="120">0</b><span>章 · 完结</span></div>
-      <div class="num"><b data-count="575686">0</b><span>字（不计空白）</span></div>
-      <div class="num"><b data-count="11">0</b><span>个清理脚本</span></div>
+      <div class="num"><b data-count="120">0</b><span>chapters · complete</span></div>
+      <div class="num"><b data-count="573623">0</b><span>characters, spaces excluded</span></div>
+      <div class="num"><b data-count="11">0</b><span>cleanup scripts</span></div>
     </div>
   </section>
 
   <section class="section wrap" id="work">
     <div class="section-head reveal">
-      <h2>为写完它造的工具。</h2>
-      <p>全部本地优先：数据留在自己的机器上，跑不跑得起来跟网络无关。</p>
+      <h2>Tools I built to finish it.</h2>
+      <p>All local-first: your data stays on your machine, and nothing depends on the network.</p>
     </div>
     <div class="grid">
 
@@ -480,8 +482,8 @@
           <h3>webnovel-writer</h3>
           <span class="pill">fork</span>
         </div>
-        <p>长篇写作的上下文与记忆系统。逐章维护人物、设定与伏笔，解决 AI 写作的「遗忘」与「幻觉」。</p>
-        <span class="more">查看仓库 ›</span>
+        <p>Context and memory for long-form writing. Tracks characters, settings and foreshadowing chapter by chapter — built to fight forgetting and hallucination.</p>
+        <span class="more">View repository ›</span>
       </a>
 
       <a class="card reveal" href="https://github.com/A-Bullrager/inkos" target="_blank" rel="noopener">
@@ -490,28 +492,28 @@
           <h3>inkos</h3>
           <span class="pill">fork</span>
         </div>
-        <p>自主写作 Agent：写、审、改三段循环，关键节点留人工把关。</p>
-        <span class="more">查看仓库 ›</span>
+        <p>An autonomous writing agent: draft, audit and revise in three passes, with human checkpoints in between.</p>
+        <span class="more">View repository ›</span>
       </a>
 
       <a class="card reveal" href="https://github.com/A-Bullrager/token-monitor" target="_blank" rel="noopener">
         <div class="card-top">
           <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 17.5a9 9 0 1 1 15 0"/><path d="M12 14l3.6-3.8"/></svg></span>
           <h3>token-monitor</h3>
-          <span class="pill">原创</span>
+          <span class="pill">original</span>
         </div>
-        <p>DeepSeek 额度仪表盘。按当前用量推算余额还能撑几天，数据只在本机。</p>
-        <span class="more">查看仓库 ›</span>
+        <p>A DeepSeek credit dashboard. Estimates how many days your balance will last — and never sends data off your machine.</p>
+        <span class="more">View repository ›</span>
       </a>
 
       <a class="card reveal" href="https://github.com/A-Bullrager/ai-desktop-pet" target="_blank" rel="noopener">
         <div class="card-top">
           <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="7" width="15" height="11" rx="5.5"/><path d="M9.5 12.5h.01M14.5 12.5h.01"/></svg></span>
           <h3>ai-desktop-pet</h3>
-          <span class="pill">原创</span>
+          <span class="pill">original</span>
         </div>
-        <p>用 Godot 写的桌面宠物，安静待在屏幕角落，陪你把这一段写完。</p>
-        <span class="more">查看仓库 ›</span>
+        <p>A desktop pet built with Godot. It sits quietly in the corner of your screen while you write.</p>
+        <span class="more">View repository ›</span>
       </a>
 
     </div>
@@ -520,25 +522,25 @@
   <section class="section section--alt">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2>还有两个去处。</h2>
-        <p>一个是我写的方法，一个是每周自动更新的趋势榜。</p>
+        <h2>Two more places to go.</h2>
+        <p>One is how I did it. The other updates itself every week.</p>
       </div>
       <div class="entries">
 
         <a class="entry reveal" href="writing/ai-novel-120-chapters.html">
           <div class="txt">
-            <div class="k">6 分钟读完</div>
-            <div class="t">我用 AI 写完了一部 57 万字的长篇</div>
-            <div class="d">三道坎与一条流水线：上下文管理、格式清理、质量审查。</div>
+            <div class="k">6 min read</div>
+            <div class="t">How I finished a 573,623-character novel</div>
+            <div class="d">Three walls and one pipeline: context, cleanup, review.</div>
           </div>
           <span class="arr">→</span>
         </a>
 
         <a class="entry reveal" href="trending/">
           <div class="txt">
-            <div class="k">每周日自动更新</div>
-            <div class="t">GitHub 每周热点</div>
-            <div class="d">官方周榜与月榜快照存档，周 / 月 / 年三档热度榜。</div>
+            <div class="k">Updated every Sunday</div>
+            <div class="t">GitHub Trending</div>
+            <div class="d">Archived snapshots of the official weekly and monthly charts.</div>
           </div>
           <span class="arr">→</span>
         </a>
@@ -549,33 +551,33 @@
 
   <section class="section wrap" id="lab">
     <div class="section-head reveal">
-      <h2>两个写作小工具。</h2>
-      <p>作者每天都在用的东西，做成了能直接在网页上玩的版本。</p>
+      <h2>Two writing toys.</h2>
+      <p>Tools I use every day, made small enough to run in a browser tab.</p>
     </div>
     <div class="lab">
 
       <div class="lab-card reveal">
-        <p class="lab-title">卡文救星 <span class="en">PLOT DICE</span></p>
-        <p class="lab-desc">场景 × 冲突 × 钩子，组合出一章的开头。写不动的时候摇一下。</p>
+        <p class="lab-title">Plot dice <span class="en">STUCK? ROLL</span></p>
+        <p class="lab-desc">Setting × conflict × hook. Roll one to get the opening beat of a chapter.</p>
         <div class="dice-rows">
-          <div class="dice-row"><span class="lab-k">场景</span><span class="val" id="dv0">深夜的更衣室</span></div>
-          <div class="dice-row"><span class="lab-k">冲突</span><span class="val" id="dv1">所有人都在质疑他</span></div>
-          <div class="dice-row"><span class="lab-k">钩子</span><span class="val" id="dv2">他拿出了那份数据</span></div>
+          <div class="dice-row"><span class="lab-k">Setting</span><span class="val" id="dv0">A locker room at midnight</span></div>
+          <div class="dice-row"><span class="lab-k">Conflict</span><span class="val" id="dv1">Everyone doubts him</span></div>
+          <div class="dice-row"><span class="lab-k">Hook</span><span class="val" id="dv2">He puts the data on the table</span></div>
         </div>
-        <button class="dice-btn" id="diceBtn">摇一下</button>
+        <button class="dice-btn" id="diceBtn">Roll</button>
       </div>
 
       <div class="lab-card reveal">
-        <p class="lab-title">字数尺 <span class="en">WORD RULER</span></p>
-        <p class="lab-desc">网文平台按「不计空白的字符数」算字数，一章的及格线是 2000 字。</p>
-        <textarea class="wc-area" id="wcArea" placeholder="把草稿贴进来，或者当场写两行——" spellcheck="false"></textarea>
+        <p class="lab-title">Character ruler <span class="en">WORD COUNT</span></p>
+        <p class="lab-desc">Chinese web novel platforms pay by character count, whitespace excluded. 2,000 per chapter is the passing line.</p>
+        <textarea class="wc-area" id="wcArea" placeholder="Paste your draft here, or just start typing —" spellcheck="false"></textarea>
         <div class="wc-stats">
-          <span>字数 <b id="wcChars">0</b></span>
-          <span>段落 <b id="wcParas">0</b></span>
-          <span>读完约 <b id="wcMin">0</b> 分钟</span>
+          <span>Characters <b id="wcChars">0</b></span>
+          <span>Paragraphs <b id="wcParas">0</b></span>
+          <span>Read <b id="wcMin">0</b> min</span>
         </div>
         <div class="wc-bar"><i id="wcFill"></i></div>
-        <div class="wc-note" id="wcNote">离一章还差 2000 字</div>
+        <div class="wc-note" id="wcNote">2,000 characters to go</div>
       </div>
 
     </div>
@@ -583,8 +585,8 @@
 
   <section class="section section--alt" id="about">
     <div class="wrap about-inner reveal">
-      <h2>写小说的人，顺手做了工具。</h2>
-      <p>它会忘——写到第 3 章就丢了第 1 章的伏笔；它会乱——章节里混着元数据标记和进度条字符；它会穿帮——现代背景里冒出「2034年」。我没弃坑，把每个坑都做成了工具。<strong>写完，是比写好更稀缺的能力。</strong></p>
+      <h2>A novelist who kept building tools.</h2>
+      <p>It forgets — by chapter 3 it has lost the thread planted in chapter 1. It drifts — metadata tags and progress-bar characters leak into the prose. It slips — a story set today suddenly says “the year 2034.” I didn’t abandon the book. I turned every one of those failures into a tool. <strong>Finishing is rarer than writing well.</strong></p>
       <p class="stack">Python · JavaScript · GDScript · C++ · Godot · Obsidian</p>
     </div>
   </section>
@@ -594,15 +596,15 @@
 <footer class="footer">
   <div class="wrap footer-inner">
     <span>© 2026 A-Bullrager</span>
-    <span>纯静态 · GitHub Pages · <a href="https://github.com/A-Bullrager/A-Bullrager.github.io" target="_blank" rel="noopener">源码</a></span>
+    <span>Static site · GitHub Pages · <a href="https://github.com/A-Bullrager/A-Bullrager.github.io" target="_blank" rel="noopener">Source</a></span>
   </div>
 </footer>
 
 <script>
-/* ---------- 章节数据 ---------- */
-const CHAPTERS=[{n:1,t:"旧梦已逝",w:2079},{n:2,t:"这一次我不逃了",w:3279},{n:3,t:"风之子降临",w:4345},{n:4,t:"你也可以叫我林",w:4784},{n:5,t:"必须的代价",w:3803},{n:6,t:"那个中国小子是谁",w:5003},{n:7,t:"一线队的机会",w:4573},{n:8,t:"首秀",w:3307},{n:9,t:"90分钟的奇迹",w:2355},{n:10,t:"签约",w:3537},{n:11,t:"更衣室的新人",w:2579},{n:12,t:"琐事的日常",w:3054},{n:13,t:"替补席的等待",w:2715},{n:14,t:"15分钟",w:2342},{n:15,t:"第一个助攻",w:1962},{n:16,t:"媒体的质疑",w:1927},{n:17,t:"被低估的心",w:1659},{n:18,t:"第一份合同",w:1958},{n:19,t:"首发",w:2207},{n:20,t:"伤病",w:1592},{n:21,t:"回归",w:772},{n:22,t:"第二份合同",w:2328},{n:23,t:"圣诞礼物",w:1439},{n:24,t:"国家队的召唤",w:2418},{n:25,t:"为国而战",w:2400},{n:26,t:"新的起点",w:1561},{n:27,t:"欧战之梦",w:4320},{n:28,t:"双线作战",w:3457},{n:29,t:"I belong here",w:4729},{n:30,t:"第一阶段结束",w:4049},{n:31,t:"主力位置",w:4210},{n:32,t:"助攻帽子戏法",w:4073},{n:33,t:"Arthur的挑衅",w:4701},{n:34,t:"盘带大师体验卡",w:3891},{n:35,t:"连过三人",w:3755},{n:36,t:"执行人上门",w:3622},{n:37,t:"合同条款",w:3805},{n:38,t:"挑战赛",w:3709},{n:39,t:"完胜",w:3837},{n:40,t:"第一波转会传闻",w:3493},{n:41,t:"一周双赛",w:5408},{n:42,t:"决赛前受伤",w:7344},{n:43,t:"必须用进球回应",w:5377},{n:44,t:"逆风",w:5349},{n:45,t:"帽子戏法",w:5870},{n:46,t:"全场最佳",w:6065},{n:47,t:"各大联赛的头条",w:5618},{n:48,t:"中国媒体的狂喜",w:5172},{n:49,t:"奶奶的电话",w:5696},{n:50,t:"新技能解锁",w:6242},{n:51,t:"术后康复",w:6406},{n:52,t:"回归训练",w:7051},{n:53,t:"欧冠抽签",w:5345},{n:54,t:"欧冠首秀",w:5538},{n:55,t:"双线作战",w:5481},{n:56,t:"国家队的召唤",w:6183},{n:57,t:"两个世界",w:5810},{n:58,t:"欧冠出线",w:6359},{n:59,t:"冬窗",w:5381},{n:60,t:"留守",w:5195},{n:61,t:"梅阿查之夜",w:5467},{n:62,t:"逆转",w:6457},{n:63,t:"八强对手",w:5864},{n:64,t:"世预赛危机",w:7277},{n:65,t:"回国救火",w:5527},{n:66,t:"八强首回合",w:6336},{n:67,t:"内心挣扎",w:5930},{n:68,t:"次回合",w:6636},{n:69,t:"四强对手",w:5386},{n:70,t:"宿敌重逢",w:6011},{n:71,t:"四强次回合",w:8934},{n:72,t:"宿敌和解",w:7027},{n:73,t:"欧冠决赛",w:6284},{n:74,t:"世界之巅",w:5712},{n:75,t:"世预赛决战",w:5768},{n:76,t:"世界杯门票",w:5463},{n:77,t:"奶奶的愿望",w:4709},{n:78,t:"皇马的召唤",w:5774},{n:79,t:"告别布莱顿",w:6220},{n:80,t:"伯纳乌亮相",w:5850},{n:81,t:"世界杯归来",w:6747},{n:82,t:"新的7号",w:5660},{n:83,t:"西甲开局",w:5863},{n:84,t:"国家德比",w:6693},{n:85,t:"欧冠首战",w:7168},{n:86,t:"伤病危机",w:7014},{n:87,t:"国家德比救赎",w:10016},{n:88,t:"年末颁奖典礼",w:6210},{n:89,t:"世界杯倒计时",w:7151},{n:90,t:"国家队集训",w:9398},{n:91,t:"世界杯首战",w:7259},{n:92,t:"生死战",w:6518},{n:93,t:"历史出线",w:7071},{n:94,t:"十六强战",w:11356},{n:95,t:"八强突破",w:5310},{n:96,t:"半决赛",w:5374},{n:97,t:"决赛之夜",w:13749},{n:98,t:"世界之巅",w:5095},{n:99,t:"回归皇马",w:3859},{n:100,t:"新的征程",w:4070},{n:101,t:"世界杯归来",w:8667},{n:102,t:"队长之路",w:3897},{n:103,t:"国家德比",w:4610},{n:104,t:"再战巴黎",w:3871},{n:105,t:"曼彻斯特之夜",w:3756},{n:106,t:"米兰之夜",w:2679},{n:107,t:"金球时刻",w:2063},{n:108,t:"欧冠征程",w:3289},{n:109,t:"欧冠决赛",w:3398},{n:110,t:"皇马传奇",w:2420},{n:111,t:"世界杯征程",w:3303},{n:112,t:"世界杯小组赛",w:3206},{n:113,t:"淘汰赛之路",w:3631},{n:114,t:"世界杯决赛",w:3401},{n:115,t:"球王加冕",w:2785},{n:116,t:"亚洲之王",w:2038},{n:117,t:"皇马传奇",w:1996},{n:118,t:"世界杯三连冠",w:2995},{n:119,t:"退役仪式",w:2600},{n:120,t:"永恒（大结局）",w:2286}];
+/* ---------- chapter data ---------- */
+const CHAPTERS=[{n:1,t:"A Dream Long Gone",w:2079},{n:2,t:"This Time I Won't Run",w:3279},{n:3,t:"The Wind's Son Arrives",w:4345},{n:4,t:"You Can Call Me Lin",w:4784},{n:5,t:"The Price I Must Pay",w:3803},{n:6,t:"Who Is That Chinese Kid",w:5003},{n:7,t:"A Chance with the First Team",w:4573},{n:8,t:"First Appearance",w:3307},{n:9,t:"A Miracle in 90 Minutes",w:2355},{n:10,t:"Signed",w:3537},{n:11,t:"The New Guy in the Locker Room",w:2579},{n:12,t:"Ordinary Days",w:3054},{n:13,t:"Waiting on the Bench",w:2715},{n:14,t:"Fifteen Minutes",w:2342},{n:15,t:"First Assist",w:1962},{n:16,t:"The Press Doubts Him",w:1927},{n:17,t:"An Underrated Heart",w:1659},{n:18,t:"The First Contract",w:1958},{n:19,t:"Starting Eleven",w:2207},{n:20,t:"Injury",w:1592},{n:21,t:"Return",w:772},{n:22,t:"The Second Contract",w:2328},{n:23,t:"A Christmas Gift",w:1439},{n:24,t:"The Call-Up",w:2418},{n:25,t:"Playing for the Country",w:2400},{n:26,t:"A New Beginning",w:1561},{n:27,t:"The European Dream",w:4320},{n:28,t:"Two Fronts",w:3457},{n:29,t:"I Belong Here",w:4729},{n:30,t:"End of the First Stage",w:4049},{n:31,t:"A Starting Spot",w:4210},{n:32,t:"Assist Hat-Trick",w:4073},{n:33,t:"Arthur's Challenge",w:4701},{n:34,t:"Dribbling Master, Trial Version",w:3891},{n:35,t:"Past Three Men",w:3755},{n:36,t:"The Enforcer Comes Knocking",w:3622},{n:37,t:"Contract Terms",w:3805},{n:38,t:"The Challenge Match",w:3709},{n:39,t:"A Clean Sweep",w:3837},{n:40,t:"The First Transfer Rumour",w:3493},{n:41,t:"Two Matches in a Week",w:5408},{n:42,t:"Injured Before the Final",w:7344},{n:43,t:"Answer with a Goal",w:5377},{n:44,t:"Against the Wind",w:5349},{n:45,t:"Hat-Trick",w:5870},{n:46,t:"Man of the Match",w:6065},{n:47,t:"Headlines Across Europe",w:5618},{n:48,t:"The Chinese Press Erupts",w:5172},{n:49,t:"A Call from Grandma",w:5696},{n:50,t:"A New Skill Unlocked",w:6242},{n:51,t:"Recovery",w:6406},{n:52,t:"Back to Training",w:7051},{n:53,t:"The Champions League Draw",w:5345},{n:54,t:"Champions League Debut",w:5538},{n:55,t:"Two Fronts, Again",w:5481},{n:56,t:"The Call-Up Returns",w:6183},{n:57,t:"Two Worlds",w:5810},{n:58,t:"Through the Group Stage",w:6359},{n:59,t:"The Winter Window",w:5381},{n:60,t:"Staying",w:5195},{n:61,t:"Night at San Siro",w:5467},{n:62,t:"Comeback",w:6457},{n:63,t:"The Quarter-Final Draw",w:5864},{n:64,t:"World Cup Qualifying Crisis",w:7277},{n:65,t:"Flying Home to Fight",w:5527},{n:66,t:"Quarter-Final, First Leg",w:6336},{n:67,t:"The Inner Struggle",w:5930},{n:68,t:"Second Leg",w:6636},{n:69,t:"The Semi-Final Draw",w:5386},{n:70,t:"Old Rivals Meet Again",w:6011},{n:71,t:"Semi-Final, Second Leg",w:8934},{n:72,t:"Truce with an Old Rival",w:7027},{n:73,t:"The Champions League Final",w:6284},{n:74,t:"Top of the World",w:5712},{n:75,t:"The Qualifier Decider",w:5768},{n:76,t:"A Ticket to the World Cup",w:5463},{n:77,t:"Grandma's Wish",w:4709},{n:78,t:"Madrid Calling",w:5774},{n:79,t:"Goodbye, Brighton",w:6220},{n:80,t:"Unveiled at the Bernabéu",w:5850},{n:81,t:"Back from the World Cup",w:6747},{n:82,t:"The New Number Seven",w:5660},{n:83,t:"The La Liga Opener",w:5863},{n:84,t:"El Clásico",w:6693},{n:85,t:"First Night in Europe",w:7168},{n:86,t:"An Injury Crisis",w:7014},{n:87,t:"Redemption in El Clásico",w:10016},{n:88,t:"The Year-End Awards",w:6210},{n:89,t:"Countdown to the World Cup",w:7151},{n:90,t:"National Camp",w:9398},{n:91,t:"World Cup Opener",w:7259},{n:92,t:"A Match to Survive",w:6518},{n:93,t:"History Made",w:7071},{n:94,t:"The Round of Sixteen",w:11356},{n:95,t:"Through the Quarters",w:5310},{n:96,t:"The Semi-Final",w:5374},{n:97,t:"Night of the Final",w:13749},{n:98,t:"Top of the World",w:5095},{n:99,t:"Back to Madrid",w:3859},{n:100,t:"A New Journey",w:4070},{n:101,t:"Home from the World Cup",w:8667},{n:102,t:"The Road to Captaincy",w:3897},{n:103,t:"El Clásico",w:4610},{n:104,t:"Paris Again",w:3871},{n:105,t:"A Night in Manchester",w:3756},{n:106,t:"A Night in Milan",w:2679},{n:107,t:"The Ballon d'Or Moment",w:2063},{n:108,t:"The European Campaign",w:3289},{n:109,t:"The Final",w:3398},{n:110,t:"A Madrid Legend",w:2420},{n:111,t:"The World Cup Road",w:3303},{n:112,t:"The Group Stage",w:3206},{n:113,t:"The Knockout Road",w:3631},{n:114,t:"The World Cup Final",w:3401},{n:115,t:"Crowned",w:2785},{n:116,t:"King of Asia",w:2038},{n:117,t:"A Madrid Legend, Again",w:1996},{n:118,t:"Three World Cups in a Row",w:2995},{n:119,t:"The Farewell",w:2600},{n:120,t:"Eternity",w:2286}];
 
-/* ---------- 热力图 ---------- */
+/* ---------- heatmap ---------- */
 (function(){
   var grid = document.getElementById('hmGrid');
   var tip = document.getElementById('hmTip');
@@ -612,7 +614,7 @@ const CHAPTERS=[{n:1,t:"旧梦已逝",w:2079},{n:2,t:"这一次我不逃了",w:3
     var b = document.createElement('button');
     b.type = 'button';
     b.className = 'hm-cell lv' + level(c.w);
-    b.setAttribute('aria-label', '第 ' + c.n + ' 章 ' + c.t + '，约 ' + c.w + ' 字');
+    b.setAttribute('aria-label', 'Chapter ' + c.n + ', ' + c.t + ', about ' + c.w + ' characters');
     b.addEventListener('mouseenter', function(){ show(b, c); });
     b.addEventListener('focus', function(){ show(b, c); });
     b.addEventListener('mouseleave', hide);
@@ -620,7 +622,7 @@ const CHAPTERS=[{n:1,t:"旧梦已逝",w:2079},{n:2,t:"这一次我不逃了",w:3
     grid.appendChild(b);
   });
   function show(el, c){
-    tip.innerHTML = '<b>第 ' + c.n + ' 章 · ' + c.t + '</b> <span class="w">' + c.w.toLocaleString() + ' 字</span>';
+    tip.innerHTML = '<b>Ch. ' + c.n + ' · ' + c.t + '</b> <span class="w">' + c.w.toLocaleString() + ' chars</span>';
     var sr = shell.getBoundingClientRect();
     var r = el.getBoundingClientRect();
     var half = tip.offsetWidth / 2;
@@ -634,7 +636,7 @@ const CHAPTERS=[{n:1,t:"旧梦已逝",w:2079},{n:2,t:"这一次我不逃了",w:3
   function hide(){ tip.classList.remove('show'); }
 })();
 
-/* ---------- 数字滚动 ---------- */
+/* ---------- count up ---------- */
 (function(){
   var els = document.querySelectorAll('[data-count]');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -656,12 +658,12 @@ const CHAPTERS=[{n:1,t:"旧梦已逝",w:2079},{n:2,t:"这一次我不逃了",w:3
   els.forEach(function(el){ io.observe(el); });
 })();
 
-/* ---------- 卡文骰子 ---------- */
+/* ---------- plot dice ---------- */
 (function(){
   var POOLS = [
-    ["深夜的更衣室","颁奖礼后台","出租屋的台灯下","发布会现场","医院走廊","训练场边线","雨夜的天台","决赛前的大巴上","直播间弹幕前","签约室门外","凌晨的机场","老房子的厨房"],
-    ["所有人都在质疑他","信任的人隐瞒了真相","合同里埋着陷阱","宿敌当众点名挑衅","伤病报告被泄露","首发名单上没有他","一段录音被曝光","十年前的旧账被翻出来","天价报价单摆在桌上","恩师公开发声反对","比赛只剩 15 分钟","他必须二选一"],
-    ["他拿出了那份数据","电话响了，是国家队","镜头正好切到他","他笑了——等的就是这一刻","门开了，来人出乎意料","他撕掉了那张纸","全场突然安静","手机亮了，一条陌生短信","他转身走向球场","这一次他不打算解释","答案在第 94 分钟","他把机会让给了宿敌的弟子"]
+    ["A locker room at midnight","Backstage at an awards show","Under a desk lamp in a rented room","A press conference","A hospital corridor","The touchline at training","A rooftop in the rain","The team bus before the final","In front of a livestream chat","Outside the signing room","An airport at 4 a.m.","The kitchen of the old house"],
+    ["Everyone doubts him","Someone he trusts has lied","The contract hides a trap","A rival calls him out in public","The injury report leaks","His name is missing from the squad","A recording surfaces","An old debt comes due","An absurd offer lands on the table","His old coach speaks against him","Fifteen minutes left in the match","He has to choose one of two"],
+    ["He puts the data on the table","The phone rings — it's the national team","The camera cuts to him","He smiles — he's been waiting for this","The door opens, and it's not who they expected","He tears the paper in half","The room goes silent","His phone lights up with a stranger's message","He walks back onto the pitch","This time he won't explain","The answer comes in the 94th minute","He gives the chance to his rival's protégé"]
   ];
   var btn = document.getElementById('diceBtn');
   var rows = [0,1,2].map(function(i){ return document.getElementById('dv' + i); });
@@ -685,7 +687,7 @@ const CHAPTERS=[{n:1,t:"旧梦已逝",w:2079},{n:2,t:"这一次我不逃了",w:3
   });
 })();
 
-/* ---------- 字数尺 ---------- */
+/* ---------- character ruler ---------- */
 (function(){
   var area = document.getElementById('wcArea');
   var charsEl = document.getElementById('wcChars');
@@ -701,15 +703,15 @@ const CHAPTERS=[{n:1,t:"旧梦已逝",w:2079},{n:2,t:"这一次我不逃了",w:3
     charsEl.textContent = chars.toLocaleString();
     parasEl.textContent = paras;
     minEl.textContent = chars ? Math.max(1, Math.round(chars / 400)) : 0;
-    fill.style.width = Math.min(100, chars / GOAL * 100) + '%';
-    if (chars >= GOAL) { note.textContent = '够发一章了 ✓'; note.classList.add('ok'); }
-    else { note.textContent = '离一章还差 ' + (GOAL - chars).toLocaleString() + ' 字'; note.classList.remove('ok'); }
+    fill.style.width = Math.min(100, Math.round(chars / GOAL * 100)) + '%';
+    if (chars >= GOAL) { note.textContent = 'Ready to publish ✓'; note.classList.add('ok'); }
+    else { note.textContent = (GOAL - chars).toLocaleString() + ' characters to go'; note.classList.remove('ok'); }
   }
   area.addEventListener('input', update);
   update();
 })();
 
-/* ---------- 主题 ---------- */
+/* ---------- theme ---------- */
 (function(){
   var btn = document.getElementById('themeBtn');
   btn.addEventListener('click', function(){
@@ -719,7 +721,7 @@ const CHAPTERS=[{n:1,t:"旧梦已逝",w:2079},{n:2,t:"这一次我不逃了",w:3
   });
 })();
 
-/* ---------- 滚动淡入 ---------- */
+/* ---------- reveal ---------- */
 (function(){
   var els = document.querySelectorAll('.reveal');
   if (!('IntersectionObserver' in window)) { els.forEach(function(el){ el.classList.add('in'); }); return; }

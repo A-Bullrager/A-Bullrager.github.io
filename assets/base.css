@@ -44,8 +44,8 @@
 
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
-    "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
-    system-ui, sans-serif;
+    "Segoe UI", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", system-ui, sans-serif;
   --mono: "SF Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 

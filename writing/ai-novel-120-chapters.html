@@ -1,21 +1,21 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>我用 AI 写完了一部 57 万字的长篇 — A-Bullrager</title>
-<meta name="description" content="120 章，57 万字，写到完结。靠的不是更好的提示词，而是一条流水线：上下文管理、格式清理、质量审查。">
+<title>How I finished a 573,623-character novel — A-Bullrager</title>
+<meta name="description" content="120 chapters, 573,623 characters, written to the end. Not better prompts — a pipeline: context, cleanup, review.">
 <link rel="canonical" href="https://a-bullrager.github.io/writing/ai-novel-120-chapters.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="A-Bullrager">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://a-bullrager.github.io/writing/ai-novel-120-chapters.html">
-<meta property="og:title" content="我用 AI 写完了一部 57 万字的长篇">
-<meta property="og:description" content="120 章，57 万字，写到完结。靠的不是更好的提示词，而是一条流水线。">
+<meta property="og:title" content="How I finished a 573,623-character novel">
+<meta property="og:description" content="120 chapters, written to the end. Not better prompts — a pipeline.">
 <meta property="og:image" content="https://a-bullrager.github.io/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="我用 AI 写完了一部 57 万字的长篇">
-<meta name="twitter:description" content="120 章，57 万字，写到完结。靠的不是更好的提示词，而是一条流水线。">
+<meta name="twitter:title" content="How I finished a 573,623-character novel">
+<meta name="twitter:description" content="120 chapters, written to the end. Not better prompts — a pipeline.">
 <meta name="twitter:image" content="https://a-bullrager.github.io/og.png">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
@@ -34,11 +34,11 @@
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "我用 AI 写完了一部 57 万字的长篇",
-  "description": "120 章，57 万字，写到完结。靠的不是更好的提示词，而是一条流水线：上下文管理、格式清理、质量审查。",
+  "headline": "How I finished a 573,623-character novel",
+  "description": "120 chapters, written to the end. Not better prompts — a pipeline: context, cleanup, review.",
   "author": {"@type": "Person", "name": "A-Bullrager", "url": "https://a-bullrager.github.io/"},
   "datePublished": "2026-10-28",
-  "inLanguage": "zh-CN"
+  "inLanguage": "en"
 }
 </script>
 <link rel="stylesheet" href="/assets/base.css">
@@ -50,7 +50,7 @@
 }
 .article .kicker{ margin-bottom: 18px; }
 .article h1{
-  font-size: clamp(34px, 5.6vw, 54px);
+  font-size: clamp(32px, 5.2vw, 52px);
   line-height: 1.08;
   margin: 0 0 20px;
 }
@@ -146,8 +146,8 @@ ul.plain li::marker{ color: var(--text-3); }
   <div class="nav-inner">
     <a class="brand" href="/">A-Bullrager</a>
     <div class="nav-links">
-      <a href="/">← 首页</a>
-      <button class="theme-btn" id="themeBtn" aria-label="切换深浅色主题">
+      <a href="/">← Home</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle light and dark theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.3 4.3l1.4 1.4M18.3 18.3l1.4 1.4M2.5 12h2M19.5 12h2M4.3 19.7l1.4-1.4M18.3 5.7l1.4-1.4"/></svg>
       </button>
@@ -156,50 +156,50 @@ ul.plain li::marker{ color: var(--text-3); }
 </nav>
 
 <article class="article">
-  <p class="kicker">方法</p>
-  <h1>我用 AI 写完了一部<br>57 万字的长篇</h1>
-  <p class="meta">A-Bullrager · 2026 年 10 月 · 约 6 分钟</p>
+  <p class="kicker">Method</p>
+  <h1>How I finished a<br>573,623-character novel</h1>
+  <p class="meta">A-Bullrager · October 2026 · 6 min read</p>
 
-  <p class="lede">120 章，575,686 字（不计空白），写到完结。中间没有弃坑，靠的不是更好的提示词，而是一条流水线。</p>
+  <p class="lede">120 chapters, 573,623 characters, written to the last page. I didn’t get there with better prompts — I got there with a pipeline.</p>
 
-  <h2>先说结果</h2>
-  <p>一部现代背景的体育题材长篇，从第 1 章写到第 120 章完结。每一章都是 AI 起草、我来把关。这本书不是重点，重点是：<strong>写完它</strong>这件事本身，逼出了一套能复用的方法。</p>
+  <h2>The result</h2>
+  <p>A modern-day sports novel, from chapter 1 to chapter 120. Every chapter was drafted by AI and reviewed by me. The book isn’t the interesting part. The interesting part is that <strong>finishing it</strong> forced a method out of me.</p>
 
-  <h2>第一道坎：它会忘</h2>
-  <p>大模型的上下文窗口装不下一本书。写到第 3 章，它已经不记得第 1 章埋的伏笔；写到第 50 章，配角的名字开始漂移，前后设定互相打架。</p>
-  <p>解法很笨，但有效：<strong>不让它记，让它查。</strong>每写完一章，把「这一章发生了什么、人物状态变了什么、埋下了哪些伏笔」压缩成结构化的状态记录。写新一章之前，只把相关的状态喂回去，而不是妄想把整本书塞进上下文。</p>
-  <p>这个思路后来沉淀成了 <a href="https://github.com/A-Bullrager/webnovel-writer" target="_blank" rel="noopener">webnovel-writer</a>：逐章维护人物、设定与伏笔，写到第 180 章，它仍然认得开头那条线。</p>
+  <h2>Wall one: it forgets</h2>
+  <p>A context window cannot hold a book. By chapter 3 it has already lost the thread planted in chapter 1. By chapter 50, side characters start drifting and the setting contradicts itself.</p>
+  <p>The fix is dumb, but it works: <strong>don’t make it remember — make it look things up.</strong> After each chapter, compress “what happened, what changed for each character, which threads were planted” into a structured state record. Before writing the next chapter, feed back only the relevant state, instead of trying to stuff the whole book into the context.</p>
+  <p>That idea later became <a href="https://github.com/A-Bullrager/webnovel-writer" target="_blank" rel="noopener">webnovel-writer</a>: characters, settings and foreshadowing tracked chapter by chapter. By chapter 180 it still remembers the line you planted at the start.</p>
 
-  <h2>第二道坎：它会乱</h2>
-  <p>生成的章节里混着各种不该出现的东西：</p>
+  <h2>Wall two: it makes a mess</h2>
+  <p>Generated chapters come back with things that shouldn’t be there:</p>
   <ul class="plain">
-    <li><code>【第XXX章完】</code> 这类元数据标记</li>
-    <li><code>▓▓▓░░</code> 这样的进度条字符</li>
-    <li>「第一部分：XXX」这种大纲残留，混在正文里</li>
+    <li>Metadata tags like <code>[End of Chapter 12]</code></li>
+    <li>Progress-bar characters like <code>▓▓▓░░</code></li>
+    <li>Outline leftovers («Part One: …») mixed into the prose</li>
   </ul>
-  <p>这些不是写作问题，是工程问题。我写了 11 个清理脚本，每个只干一件事：删章节尾标记、删进度条字符、删大纲残留、修多余的逗号……写完一章跑一遍，格式问题从「逐章人工检查」变成「机械操作」。</p>
+  <p>These aren’t writing problems, they’re engineering problems. I wrote 11 cleanup scripts, each doing exactly one thing: strip chapter-end markers, strip progress-bar characters, strip outline leftovers, fix stray commas. Run them after every chapter and formatting goes from “check it by hand” to “mechanical”.</p>
 
-  <h2>第三道坎：它会穿帮</h2>
-  <p>最难抓的是内容级的错误。我的故事发生在现代，但 AI 偶尔会写出「2034年」——那是它从训练语料里带出来的时间感，和故事设定直接冲突。于是有了 <code>remove_years.py</code>：把 <code>\d{4}年</code> 全扫出来删掉。</p>
-  <p>还有一次，脚本删完章节尾标记之后留下了多余的逗号，如果复查没跟上，读者看到的就是病句。</p>
-  <div class="callout"><strong>教训：每一次自动修改，都要有验证跟在后面。</strong>改完格式要复查，删完字符要再读一遍。自动化不是免责，是把检查点挪了位置。</div>
+  <h2>Wall three: it slips</h2>
+  <p>The hardest errors to catch are in the content. My story is set in the present, but the model occasionally wrote “the year 2034” — a sense of time carried over from its training data, in direct conflict with the setting. So I wrote <code>remove_years.py</code>: find <code>\d{4}年</code>, delete it.</p>
+  <p>Once, a script that stripped chapter-end markers left a dangling comma behind. Without a re-read, the reader would have seen a broken sentence.</p>
+  <div class="callout"><strong>Lesson: every automatic edit needs a check behind it.</strong> Re-read after reformatting, read again after deleting characters. Automation doesn’t absolve you — it moves the checkpoint.</div>
 
-  <h2>我学到的</h2>
-  <p>AI 写作不是「一键生成」，是一条流水线：<strong>生成只是其中一环，剩下的是上下文管理、格式清理、质量审查。</strong>把每一环都做成工具之后，「写完一部长篇」才从运气变成流程。</p>
-  <p>这也是为什么我做的工具全是本地优先的——写作进度、人物状态、伏笔清单，都是作者最私密的东西，不该离开自己的机器。</p>
+  <h2>What I learned</h2>
+  <p>AI writing isn’t one-click generation. It’s a pipeline: <strong>generation is one stage; the rest is context management, format cleanup and quality review.</strong> Once each stage became a tool, “finish a long novel” turned from luck into a process.</p>
+  <p>That’s also why all my tools are local-first: progress, character state and foreshadowing are the most private things a writer has. They shouldn’t leave your machine.</p>
 
   <div class="divider"></div>
 
-  <h2>工具都在这</h2>
+  <h2>The tools</h2>
   <ul class="plain">
-    <li><a href="https://github.com/A-Bullrager/webnovel-writer" target="_blank" rel="noopener">webnovel-writer</a> — 长篇写作的上下文与记忆系统</li>
-    <li><a href="https://github.com/A-Bullrager/inkos" target="_blank" rel="noopener">inkos</a> — 写、审、改三段循环的写作 Agent</li>
+    <li><a href="https://github.com/A-Bullrager/webnovel-writer" target="_blank" rel="noopener">webnovel-writer</a> — context and memory for long-form writing</li>
+    <li><a href="https://github.com/A-Bullrager/inkos" target="_blank" rel="noopener">inkos</a> — a writing agent that drafts, audits and revises</li>
   </ul>
-  <p>清理脚本每个只有几十行，散落在本地，整理好会陆续放出来。</p>
+  <p>The cleanup scripts are a few dozen lines each and live on my own machine. I’ll publish them as I tidy them up.</p>
 
   <div class="next">
-    <p>这些方法都装进了工具里。</p>
-    <a class="btn btn-primary" href="/">回到首页看项目</a>
+    <p>These methods are built into the tools.</p>
+    <a class="btn btn-primary" href="/">Back to the projects</a>
   </div>
 </article>
 
