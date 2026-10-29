@@ -147,12 +147,41 @@ def target_path(since: str, captured: date) -> tuple[Path, str]:
     return DATA / "weekly" / f"{key}.json", key
 
 
+def ensure_needed(since: str, today: date) -> tuple[bool, str]:
+    """补抓判断：只有确认缺期时才返回 True。"""
+    if since == "weekly":
+        files = sorted((DATA / "weekly").glob("*.json"))
+        if not files:
+            return True, "还没有任何周快照"
+        last = date.fromisoformat(files[-1].stem)
+        gap = (today - last).days
+        # 阈值 8 天：正常周日跑完后，周一的检查不会重复抓取
+        return gap >= 8, f"最新周快照 {last}，距今 {gap} 天"
+    if not (2 <= today.day <= 7):
+        return False, "不在月初补抓窗口内"
+    prev = (today.replace(day=1) - timedelta(days=1)).strftime("%Y-%m")
+    if (DATA / "monthly" / f"{prev}.json").exists():
+        return False, f"{prev} 已有快照"
+    return True, f"{prev} 缺少快照"
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--since", choices=["weekly", "monthly"], default="weekly")
     ap.add_argument("--html", help="从本地 HTML 文件读取，而不是联网抓取")
-    ap.add_argument("--date", help="覆盖抓取日期 YYYY-MM-DD（调试用）")
+    ap.add_argument("--date", help="覆盖抓取日期 YYYY-MM-DD（调试 / 补抓用）")
+    ap.add_argument("--ensure", action="store_true", help="只有确认缺期时才抓取")
     args = ap.parse_args()
+
+    if args.ensure:
+        today = date.fromisoformat(args.date) if args.date else date.today()
+        need, why = ensure_needed(args.since, today)
+        print(f"[ensure] {args.since}: {'需要补抓' if need else '跳过'} — {why}")
+        if not need:
+            return 0
+        if args.since == "monthly" and not args.date:
+            args.date = today.replace(day=1).isoformat()
+            print(f"[ensure] 月榜补抓按 {args.date} 归档到上一个月")
 
     if args.html:
         page = Path(args.html).read_text(encoding="utf-8", errors="replace")

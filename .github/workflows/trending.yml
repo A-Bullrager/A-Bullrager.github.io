@@ -9,10 +9,15 @@ on:
     # 月榜：每月 1 日 00:00 UTC = 北京时间 1 日 08:00
     # since=monthly 是「往前 30 天」的滚动窗口，1 号早上抓近似上月整月。
     - cron: "0 0 1 * *"
+    # 补抓：周一 01:00 UTC（北京 09:00）检查周榜有没有缺期
+    - cron: "0 1 * * 1"
+    # 补抓：每月 2-7 日 01:00 UTC 检查上月月榜有没有缺期
+    - cron: "0 1 2-7 * *"
   workflow_dispatch:
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: trending
@@ -30,11 +35,74 @@ jobs:
 
       - name: Fetch weekly trending
         if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 14 * * 0'
-        run: python scripts/fetch_trending.py --since weekly
+        run: |
+          set +e
+          for i in 1 2 3; do
+            python scripts/fetch_trending.py --since weekly
+            if [ $? -eq 0 ]; then echo "weekly ok on attempt $i"; exit 0; fi
+            echo "weekly attempt $i failed; retrying in 30s"
+            sleep 30
+          done
+          echo "weekly failed after 3 attempts"
+          exit 1
 
       - name: Fetch monthly trending
         if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 0 1 * *'
-        run: python scripts/fetch_trending.py --since monthly
+        run: |
+          set +e
+          for i in 1 2 3; do
+            python scripts/fetch_trending.py --since monthly
+            if [ $? -eq 0 ]; then echo "monthly ok on attempt $i"; exit 0; fi
+            echo "monthly attempt $i failed; retrying in 30s"
+            sleep 30
+          done
+          echo "monthly failed after 3 attempts"
+          exit 1
+
+      - name: Catch up missed weekly snapshot
+        if: github.event.schedule == '0 1 * * 1'
+        run: |
+          set +e
+          for i in 1 2 3; do
+            python scripts/fetch_trending.py --since weekly --ensure
+            if [ $? -eq 0 ]; then exit 0; fi
+            echo "catch-up weekly attempt $i failed; retrying in 30s"
+            sleep 30
+          done
+          exit 1
+
+      - name: Catch up missed monthly snapshot
+        if: github.event.schedule == '0 1 2-7 * *'
+        run: |
+          set +e
+          for i in 1 2 3; do
+            python scripts/fetch_trending.py --since monthly --ensure
+            if [ $? -eq 0 ]; then exit 0; fi
+            echo "catch-up monthly attempt $i failed; retrying in 30s"
+            sleep 30
+          done
+          exit 1
+
+      - name: Validate snapshots
+        run: |
+          python - <<'PY'
+          import glob, json, sys
+          files = sorted(glob.glob('data/trending/weekly/*.json')) + sorted(glob.glob('data/trending/monthly/*.json'))
+          if not files:
+              sys.exit('no snapshot files found')
+          bad = []
+          for path in files:
+              try:
+                  data = json.load(open(path, encoding='utf-8'))
+              except Exception as exc:
+                  bad.append(f'{path}: {exc}')
+                  continue
+              if not data.get('repos'):
+                  bad.append(f'{path}: empty repos')
+          if bad:
+              sys.exit('invalid snapshots:\n' + '\n'.join(bad))
+          print(f'ok: {len(files)} snapshot files')
+          PY
 
       - name: Rebuild yearly rankings and index
         run: python scripts/build_rankings.py
@@ -50,3 +118,30 @@ jobs:
           fi
           git commit -m "chore: trending snapshot $(date -u +%F)"
           git push
+
+      - name: Report failure as an issue
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const day = new Date().toISOString().slice(0, 10);
+            const title = `[trending] snapshot failed on ${day}`;
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const found = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${context.repo.owner}/${context.repo.repo} in:title "${title}"`
+            });
+            if (found.data.total_count === 0) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body: `The scheduled snapshot job failed.\n\nRun: ${runUrl}\n\nCommon causes: the fetch was blocked, or GitHub changed the Trending page markup.`
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: found.data.items[0].number,
+                body: `Failed again: ${runUrl}`
+              });
+            }
