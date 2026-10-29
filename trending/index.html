@@ -107,7 +107,7 @@
 .chips-wrap{ padding: 0 0 10px; }
 .chips{
   display: flex;
-  gap: 20px;
+  gap: 6px;
   overflow-x: auto;
   padding: 2px 0;
   scrollbar-width: none;
@@ -116,18 +116,23 @@
 .chips:empty{ display: none; }
 .chip{
   flex: none;
-  padding: 3px 0;
+  padding: 5px 12px;
   border: 0;
+  border-radius: var(--r-pill);
   background: transparent;
-  color: var(--text-3);
+  color: var(--text-2);
   font-family: var(--font);
   font-size: 12px;
   font-variant-numeric: tabular-nums;
   cursor: pointer;
-  transition: color 0.2s var(--ease);
+  transition: background 0.18s var(--ease), color 0.18s var(--ease);
 }
-.chip.on{ color: var(--text); font-weight: 600; }
-.chip:hover:not(.on){ color: var(--text-2); }
+.chip.on{
+  background: var(--chip-bg);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+.chip:hover:not(.on){ color: var(--text); }
 
 .list-wrap{ padding: 28px 0 44px; }
 .note{
@@ -301,8 +306,8 @@
 <div class="toolbar">
   <div class="wrap toolbar-inner">
     <div class="segmented" role="tablist">
-      <button class="seg on" data-kind="week" role="tab">This week</button>
-      <button class="seg" data-kind="month" role="tab">This month</button>
+      <button class="seg on" data-kind="week" role="tab">Weekly</button>
+      <button class="seg" data-kind="month" role="tab">Monthly</button>
       <button class="seg" data-kind="year" role="tab">Yearly</button>
     </div>
     <input class="search" id="q" type="search" placeholder="Search repos or languages" autocomplete="off">
@@ -434,11 +439,11 @@
   function setNote(){
     var parts;
     if (state.kind === 'week'){
-      parts = ['Week of ' + state.period, state.items.length + ' repos'];
+      parts = [state.items.length + ' repos', 'official weekly chart'];
     } else if (state.kind === 'month'){
-      parts = ['Month ' + state.period, state.items.length + ' repos', 'official monthly chart', 'captured ' + (state.captured || state.period)];
+      parts = [state.items.length + ' repos', 'official monthly chart', 'captured ' + (state.captured || state.period)];
     } else {
-      parts = ['Year ' + state.period, state.items.length + ' repos', 'aggregated from ' + (state.monthsCount || 1) + ' monthly chart' + ((state.monthsCount || 1) > 1 ? 's' : '')];
+      parts = [state.items.length + ' repos', 'aggregated from ' + (state.monthsCount || 1) + ' monthly chart' + ((state.monthsCount || 1) > 1 ? 's' : '')];
     }
     elNote.textContent = parts.join(' · ');
   }
@@ -462,7 +467,6 @@
 
   function syncPeriodChips(){
     var list = periods();
-    if (list.length <= 1){ elChips.innerHTML = ''; return; }
     elChips.innerHTML = list.map(function(p){
       return '<button class="chip' + (p === state.period ? ' on' : '') + '" data-period="' + p + '">' + p + '</button>';
     }).join('');
