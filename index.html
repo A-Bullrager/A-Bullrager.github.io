@@ -122,9 +122,9 @@ a{color:inherit;text-decoration:none}
 .theme-btn:hover{color:var(--accent);border-color:var(--accent)}
 .theme-btn:active{transform:rotate(40deg)}
 .theme-btn svg{width:15px;height:15px;display:block}
-.icon-sun{display:none}
-[data-theme="dark"] .icon-sun{display:block}
-[data-theme="dark"] .icon-moon{display:none}
+.theme-btn .icon-sun{display:none}
+[data-theme="dark"] .theme-btn .icon-sun{display:block}
+[data-theme="dark"] .theme-btn .icon-moon{display:none}
 
 /* ===== hero ===== */
 .hero{padding:104px 0 88px;border-bottom:1px solid var(--line)}
@@ -258,6 +258,8 @@ h2{
   transition:background .2s var(--ease),color .2s var(--ease),transform .25s var(--ease);
 }
 .method:hover .arr{background:var(--accent);color:var(--on-accent);transform:translateX(4px)}
+.method--alt{background:var(--accent-soft);border-color:transparent}
+.method--alt .t{color:var(--accent-ink)}
 
 /* ===== lab ===== */
 .lab-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
@@ -361,6 +363,7 @@ footer{padding:36px 0 48px}
     <a class="logo" href="/"><i></i>A-Bullrager</a>
     <div class="nav-links">
       <a href="#work">工具</a>
+      <a href="trending/">热点</a>
       <a href="#lab">实验室</a>
       <a href="writing/ai-novel-120-chapters.html">文章</a>
       <a class="nav-gh" href="https://github.com/A-Bullrager" target="_blank" rel="noopener">GitHub</a>
@@ -477,9 +480,23 @@ footer{padding:36px 0 48px}
     </a>
   </section>
 
+  <section class="section wrap" id="data">
+    <div class="reveal">
+      <div class="sec-head"><span class="sec-num">04</span><span class="sec-tag">数据 DATA</span></div>
+    </div>
+    <a class="method method--alt reveal" href="trending/">
+      <div class="txt">
+        <div class="k">每周一自动更新</div>
+        <div class="t">GitHub 每周热点</div>
+        <div class="d">官方周榜快照存档，周 / 月 / 年三档热度榜。</div>
+      </div>
+      <span class="arr">→</span>
+    </a>
+  </section>
+
   <section class="section wrap" id="lab">
     <div class="reveal">
-      <div class="sec-head"><span class="sec-num">04</span><span class="sec-tag">实验室 LAB</span></div>
+      <div class="sec-head"><span class="sec-num">05</span><span class="sec-tag">实验室 LAB</span></div>
       <h2>两个写作小工具。</h2>
       <p class="sec-sub">作者每天都在用的东西，做成了能直接在网页上玩的版本。</p>
     </div>
@@ -514,7 +531,7 @@ footer{padding:36px 0 48px}
 
   <section class="section wrap about" id="about" style="border-bottom:0">
     <div class="reveal">
-      <div class="sec-head"><span class="sec-num">05</span><span class="sec-tag">关于 ABOUT</span></div>
+      <div class="sec-head"><span class="sec-num">06</span><span class="sec-tag">关于 ABOUT</span></div>
       <h2>写小说的人，顺手做了工具。</h2>
       <p>它会忘——写到第 3 章就丢了第 1 章的伏笔；它会乱——章节里混着元数据标记和进度条字符；它会穿帮——现代背景里冒出「2034年」。我没弃坑，把每个坑都做成了工具。<strong>写完，是比写好更稀缺的能力。</strong></p>
       <p class="stack">Python · JavaScript · GDScript · C++ · Godot · Obsidian</p>

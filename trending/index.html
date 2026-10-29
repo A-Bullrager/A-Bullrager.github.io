@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GitHub 每周热点 — A-Bullrager</title>
+<meta name="description" content="每周自动抓取 GitHub 官方 Trending 周榜并留存快照，提供本周、本月、年度热度榜。">
+<link rel="canonical" href="https://a-bullrager.github.io/trending/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="A-Bullrager">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:url" content="https://a-bullrager.github.io/trending/">
+<meta property="og:title" content="GitHub 每周热点">
+<meta property="og:description" content="每周留存官方 Trending 周榜快照，提供周/月/年三档热度榜。">
+<meta property="og:image" content="https://a-bullrager.github.io/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://a-bullrager.github.io/og.png">
+<meta name="theme-color" content="#FAFAF7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F100E" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230C5B4A'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='15' fill='%23FAFAF7' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<script>
+(function(){
+  var t=null;
+  try{ t=localStorage.getItem('theme'); }catch(e){}
+  if(t!=='light'&&t!=='dark'){ t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'; }
+  document.documentElement.setAttribute('data-theme',t);
+})();
+</script>
+<style>
+:root{
+  --bg:#FAFAF7;--surface:#FFFFFF;--surface-2:#F2F1EB;
+  --text:#181816;--muted:#68675F;--muted-2:#9B9A90;
+  --line:rgba(24,24,22,.1);
+  --accent:#0C5B4A;--accent-soft:#E7F1ED;--accent-ink:#0C5B4A;--on-accent:#FAFAF7;
+  --shadow:0 20px 50px rgba(24,24,22,.09),0 2px 6px rgba(24,24,22,.04);
+  --serif:Georgia,"Songti SC","Noto Serif SC",SimSun,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+[data-theme="dark"]{
+  --bg:#0F100E;--surface:#191B18;--surface-2:#141613;
+  --text:#EBECE6;--muted:#9C9E95;--muted-2:#6E7068;
+  --line:rgba(235,236,230,.11);
+  --accent:#45D49A;--accent-soft:#122B21;--accent-ink:#45D49A;--on-accent:#0C241B;
+  --shadow:0 20px 50px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:var(--sans);font-size:16.5px;line-height:1.65;letter-spacing:-.006em;
+  -webkit-font-smoothing:antialiased;
+  transition:background .3s var(--ease),color .3s var(--ease);
+}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--accent);color:var(--on-accent)}
+.wrap{max-width:920px;margin:0 auto;padding:0 24px}
+
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:color-mix(in srgb,var(--bg) 80%,transparent);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  max-width:920px;margin:0 auto;padding:0 24px;height:54px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:15.5px}
+.logo i{width:9px;height:9px;border-radius:2.5px;background:var(--accent);display:block;transform:rotate(-4deg)}
+.nav-right{display:flex;align-items:center;gap:20px;font-size:13px;color:var(--muted)}
+.nav-right a:hover{color:var(--text)}
+.theme-btn{
+  width:30px;height:30px;border-radius:50%;border:1px solid var(--line);
+  background:var(--surface);color:var(--muted);cursor:pointer;
+  display:grid;place-items:center;padding:0;
+  transition:color .18s var(--ease),border-color .18s var(--ease);
+}
+.theme-btn:hover{color:var(--accent);border-color:var(--accent)}
+.theme-btn svg{width:15px;height:15px;display:block}
+.theme-btn .icon-sun{display:none}
+[data-theme="dark"] .theme-btn .icon-sun{display:block}
+[data-theme="dark"] .theme-btn .icon-moon{display:none}
+
+.head{padding:76px 0 40px}
+.kicker{
+  margin:0 0 18px;font-family:var(--mono);font-size:12px;font-weight:500;
+  letter-spacing:.16em;color:var(--accent-ink);
+}
+h1{
+  margin:0 0 16px;font-family:var(--serif);font-weight:400;
+  font-size:clamp(38px,6vw,60px);line-height:1.06;letter-spacing:-.02em;
+}
+.sub{margin:0 0 22px;max-width:30em;font-size:17.5px;line-height:1.7;color:var(--muted)}
+.meta-line{
+  display:flex;gap:18px;flex-wrap:wrap;align-items:center;
+  font-family:var(--mono);font-size:12px;color:var(--muted-2);
+}
+.meta-line b{color:var(--text);font-weight:600}
+
+.toolbar{
+  position:sticky;top:54px;z-index:90;
+  padding:14px 0;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.toolbar-inner{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.tabs{
+  display:inline-flex;padding:3px;border-radius:980px;
+  background:var(--surface-2);gap:2px;
+}
+.tab{
+  padding:7px 18px;border-radius:980px;border:0;background:transparent;
+  font-family:var(--sans);font-size:13.5px;font-weight:500;color:var(--muted);
+  cursor:pointer;transition:background .18s var(--ease),color .18s var(--ease);
+}
+.tab.on{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.sel{
+  padding:8px 12px;border-radius:10px;border:1px solid var(--line);
+  background:var(--surface);color:var(--text);font-family:var(--mono);font-size:12px;
+  cursor:pointer;
+}
+.search{
+  margin-left:auto;min-width:180px;flex:0 1 240px;
+  padding:9px 14px;border-radius:10px;border:1px solid var(--line);
+  background:var(--surface);color:var(--text);
+  font-family:var(--sans);font-size:13.5px;outline:none;
+  transition:border-color .18s var(--ease);
+}
+.search:focus{border-color:var(--accent)}
+.search::placeholder{color:var(--muted-2)}
+
+.list-wrap{padding:26px 0 40px}
+.note{
+  margin:0 0 18px;font-family:var(--mono);font-size:11.5px;color:var(--muted-2);
+}
+.list{display:flex;flex-direction:column}
+.row{
+  display:grid;grid-template-columns:40px 1fr;gap:16px;
+  padding:20px 0;border-bottom:1px solid var(--line);
+  transition:background .18s var(--ease);
+  position:relative;
+}
+.row::before{
+  content:"";position:absolute;inset:0 -14px;background:var(--accent-soft);
+  opacity:0;transition:opacity .18s var(--ease);z-index:-1;border-radius:12px;
+}
+.row:hover::before{opacity:.55}
+.rk{
+  font-family:var(--mono);font-size:12px;color:var(--muted-2);
+  padding-top:3px;text-align:right;
+}
+.row:nth-child(-n+3) .rk{color:var(--accent-ink);font-weight:600}
+.top{display:flex;align-items:baseline;gap:12px;margin-bottom:5px}
+.nm{font-size:16.5px;font-weight:600;letter-spacing:-.01em;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nm .ow{color:var(--muted);font-weight:400}
+.delta{
+  margin-left:auto;flex:none;
+  font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent-ink);
+  background:var(--accent-soft);padding:2px 9px;border-radius:980px;
+}
+.ds{
+  margin:0 0 8px;font-size:14px;line-height:1.6;color:var(--muted);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.mt{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:11.5px;color:var(--muted-2);
+}
+.mt .lg{display:inline-flex;align-items:center;gap:6px}
+.mt .dot{width:8px;height:8px;border-radius:50%;display:block;background:var(--muted-2)}
+
+.empty{
+  padding:60px 0;text-align:center;color:var(--muted);
+}
+.empty b{display:block;font-family:var(--serif);font-size:22px;color:var(--text);margin-bottom:8px}
+.empty p{margin:0;font-size:14px}
+
+.foot-note{
+  margin:36px 0 0;padding:20px 24px;border-radius:16px;
+  background:var(--surface);border:1px solid var(--line);
+  font-size:13px;line-height:1.7;color:var(--muted);
+}
+.foot-note b{color:var(--text);font-weight:600}
+footer{padding:32px 0 48px;border-top:1px solid var(--line)}
+.foot{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-size:12.5px;color:var(--muted-2);
+}
+.foot a:hover{color:var(--text)}
+
+@media (max-width:720px){
+  .head{padding:56px 0 32px}
+  .toolbar{top:54px;padding:10px 0}
+  .search{margin-left:0;flex:1 1 100%;min-width:0}
+  .row{grid-template-columns:30px 1fr;gap:12px;padding:16px 0}
+  .nm{font-size:15.5px}
+  .ds{-webkit-line-clamp:2}
+  .foot{flex-direction:column;align-items:flex-start;gap:6px}
+}
+@media (prefers-reduced-motion: reduce){
+  .row,.tab,.theme-btn{transition:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="../"><i></i>A-Bullrager</a>
+    <div class="nav-right">
+      <a href="../">首页</a>
+      <a href="../writing/ai-novel-120-chapters.html">文章</a>
+      <button class="theme-btn" id="themeBtn" aria-label="切换深浅色主题">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.3 4.3l1.4 1.4M18.3 18.3l1.4 1.4M2.5 12h2M19.5 12h2M4.3 19.7l1.4-1.4M18.3 5.7l1.4-1.4"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<header class="head wrap">
+  <p class="kicker">TRENDING · 数据自留地</p>
+  <h1>GitHub 每周热点</h1>
+  <p class="sub">每周抓一次官方 Trending 周榜，把快照存进自己的仓库。周榜看当下，月榜年榜看谁真的留住了注意力。</p>
+  <div class="meta-line">
+    <span>更新于 <b id="mUpdated">—</b></span>
+    <span>已收录 <b id="mWeeks">—</b> 期</span>
+    <span>本期 <b id="mCount">—</b> 个仓库</span>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap toolbar-inner">
+    <div class="tabs" role="tablist">
+      <button class="tab on" data-kind="week" role="tab">本周</button>
+      <button class="tab" data-kind="month" role="tab">本月</button>
+      <button class="tab" data-kind="year" role="tab">年度</button>
+    </div>
+    <select class="sel" id="periodSel" hidden></select>
+    <input class="search" id="q" type="search" placeholder="搜索仓库 / 语言" autocomplete="off">
+  </div>
+</div>
+
+<main class="wrap list-wrap">
+  <p class="note" id="note">加载中…</p>
+  <div class="list" id="list"></div>
+  <div class="empty" id="empty" hidden>
+    <b>还没有这一期的数据</b>
+    <p>周榜每周一自动抓取一次，攒够之后这里会自动出现月榜与年榜。</p>
+  </div>
+  <div class="foot-note">
+    <b>数据口径</b>：来源为 GitHub 官方 <a href="https://github.com/trending?since=weekly" target="_blank" rel="noopener">Trending 周榜</a>，每周一自动抓取并提交快照，不修改原始数值。月榜 / 年榜按该周期内各周「star 新增」累加排序，上榜次数同时展示。
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 A-Bullrager</span>
+    <span><a href="../">返回首页</a> · 纯静态 · GitHub Pages</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var BASE = '../data/trending/';
+  var state = { kind: 'week', index: null, items: [], period: '', query: '' };
+
+  var elUpdated = document.getElementById('mUpdated');
+  var elWeeks = document.getElementById('mWeeks');
+  var elCount = document.getElementById('mCount');
+  var elList = document.getElementById('list');
+  var elNote = document.getElementById('note');
+  var elEmpty = document.getElementById('empty');
+  var elSel = document.getElementById('periodSel');
+  var elQ = document.getElementById('q');
+
+  function fmt(n){ return (n || 0).toLocaleString('en-US'); }
+
+  function fetchJSON(path){
+    return fetch(path, {cache: 'no-store'}).then(function(r){
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    });
+  }
+
+  function periods(){
+    if (!state.index) return [];
+    if (state.kind === 'week') return state.index.weeks.map(function(w){ return w.date; });
+    if (state.kind === 'month') return state.index.months.slice();
+    return state.index.years.slice();
+  }
+
+  function pathFor(kind, period){
+    if (kind === 'week') return BASE + 'weekly/' + period + '.json';
+    if (kind === 'month') return BASE + 'monthly/' + period + '.json';
+    return BASE + 'yearly/' + period + '.json';
+  }
+
+  function setEmpty(title, desc){
+    elEmpty.querySelector('b').textContent = title;
+    elEmpty.querySelector('p').textContent = desc;
+    elEmpty.hidden = false;
+    elList.hidden = true;
+  }
+
+  function render(){
+    var q = state.query.trim().toLowerCase();
+    var items = state.items.filter(function(r){
+      if (!q) return true;
+      return (r.full_name + ' ' + (r.description || '') + ' ' + (r.language || '')).toLowerCase().indexOf(q) >= 0;
+    });
+
+    elList.innerHTML = '';
+    if (!items.length){
+      if (state.items.length){
+        elNote.textContent = '没有匹配的仓库';
+        setEmpty('没有匹配的仓库', '换个关键词试试，或者切到别的周期看看。');
+      } else {
+        elNote.textContent = '';
+        setEmpty('还没有这一期的数据', '周榜每周一自动抓取一次，攒够之后这里会自动出现月榜与年榜。');
+      }
+      return;
+    }
+    elEmpty.hidden = true;
+    elList.hidden = false;
+
+    items.forEach(function(r){
+      var a = document.createElement('a');
+      a.className = 'row';
+      a.href = r.url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+
+      var delta = state.kind === 'week' ? r.stars_week : r.stars_week_total;
+      var deltaLabel = '+' + fmt(delta);
+
+      var meta = [];
+      if (r.language){
+        meta.push('<span class="lg"><i class="dot" style="background:' + (r.language_color || 'var(--muted-2)') + '"></i>' + r.language + '</span>');
+      }
+      meta.push('<span>' + fmt(r.stars) + ' stars</span>');
+      if (state.kind !== 'week'){
+        meta.push('<span>上榜 ' + r.appearances + ' 次</span>');
+      }
+
+      a.innerHTML =
+        '<span class="rk">' + r.rank + '</span>' +
+        '<div class="body">' +
+          '<div class="top">' +
+            '<span class="nm"><span class="ow">' + r.owner + ' / </span>' + r.name + '</span>' +
+            '<span class="delta" title="该周期内新增 star">' + deltaLabel + '</span>' +
+          '</div>' +
+          (r.description ? '<p class="ds">' + escapeHTML(r.description) + '</p>' : '') +
+          '<div class="mt">' + meta.join('') + '</div>' +
+        '</div>';
+      elList.appendChild(a);
+    });
+  }
+
+  function escapeHTML(s){
+    return s.replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  function setNote(extra){
+    var label = state.kind === 'week' ? '本期' : (state.kind === 'month' ? '本月' : '年度');
+    var parts = [label + ' ' + state.period, '共 ' + state.items.length + ' 个仓库'];
+    if (state.kind !== 'week') parts.push('覆盖 ' + state.weeksCount + ' 期周榜');
+    if (extra) parts.push(extra);
+    elNote.textContent = parts.join(' · ');
+  }
+
+  function loadPeriod(period){
+    state.period = period;
+    return fetchJSON(pathFor(state.kind, period)).then(function(data){
+      state.items = data.repos || [];
+      state.weeksCount = data.weeks || 1;
+      setNote('');
+      render();
+    }).catch(function(){
+      state.items = [];
+      state.weeksCount = 0;
+      elNote.textContent = '';
+      render();
+    });
+  }
+
+  function syncPeriodSelect(){
+    var list = periods();
+    if (list.length <= 1){ elSel.hidden = true; return; }
+    elSel.hidden = false;
+    elSel.innerHTML = list.map(function(p){
+      return '<option value="' + p + '"' + (p === state.period ? ' selected' : '') + '>' + p + '</option>';
+    }).join('');
+  }
+
+  function switchKind(kind){
+    state.kind = kind;
+    var list = periods();
+    document.querySelectorAll('.tab').forEach(function(b){
+      b.classList.toggle('on', b.dataset.kind === kind);
+    });
+    if (!list.length){
+      state.items = [];
+      state.period = '';
+      syncPeriodSelect();
+      render();
+      return;
+    }
+    loadPeriod(list[0]).then(syncPeriodSelect);
+  }
+
+  document.querySelectorAll('.tab').forEach(function(btn){
+    btn.addEventListener('click', function(){ switchKind(btn.dataset.kind); });
+  });
+
+  elSel.addEventListener('change', function(){
+    loadPeriod(elSel.value);
+  });
+
+  elQ.addEventListener('input', function(){
+    state.query = elQ.value;
+    render();
+  });
+
+  fetchJSON(BASE + 'index.json').then(function(index){
+    state.index = index;
+    elUpdated.textContent = index.updated_at;
+    elWeeks.textContent = index.weeks.length;
+    elCount.textContent = index.weeks[0] ? index.weeks[0].count : 0;
+    switchKind('week');
+  }).catch(function(){
+    elNote.textContent = '数据索引加载失败，请稍后刷新。';
+    elList.hidden = true;
+    elEmpty.hidden = false;
+    elEmpty.querySelector('b').textContent = '数据暂时不可用';
+    elEmpty.querySelector('p').textContent = '索引文件读不到，可能是还没跑过第一次抓取。';
+  });
+
+  var btn = document.getElementById('themeBtn');
+  btn.addEventListener('click', function(){
+    var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch(e){}
+  });
+})();
+</script>
+
+</body>
+</html>
