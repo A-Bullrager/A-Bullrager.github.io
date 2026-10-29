@@ -1,15 +1,20 @@
 {
   "updated_at": "2026-10-29",
-  "source": "https://github.com/trending?since=weekly",
   "weeks": [
     {
       "date": "2026-10-29",
+      "captured_at": "2026-10-29",
       "count": 11,
       "top": "cloudflare/security-audit-skill"
     }
   ],
   "months": [
-    "2026-10"
+    {
+      "period": "2026-10",
+      "captured_at": "2026-10-29",
+      "count": 19,
+      "top": "cloudflare/security-audit-skill"
+    }
   ],
   "years": [
     "2026"

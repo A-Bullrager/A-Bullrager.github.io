@@ -1,7 +1,8 @@
 {
   "captured_at": "2026-10-29",
-  "captured_iso": "2026-10-29T12:38:25Z",
+  "captured_iso": "2026-10-29T12:56:16Z",
   "since": "weekly",
+  "period": "2026-10-29",
   "source": "https://github.com/trending?since=weekly",
   "count": 11,
   "repos": [
@@ -14,9 +15,9 @@
       "description": "A coding-agent skill for multi-phase security audits with independently verified, machine-readable findings",
       "language": "JavaScript",
       "language_color": "#f1e05a",
-      "stars": 52300,
+      "stars": 52319,
       "forks": 3347,
-      "stars_week": 16002
+      "stars_period": 16002
     },
     {
       "rank": 2,
@@ -29,7 +30,7 @@
       "language_color": "#555555",
       "stars": 41709,
       "forks": 8479,
-      "stars_week": 1201
+      "stars_period": 1201
     },
     {
       "rank": 3,
@@ -40,9 +41,9 @@
       "description": "Universal SEO skill for Claude Code. 26 sub-skills + 19 sub-agents covering technical SEO, E-E-A-T, schema, GEO/AEO, agent readiness (Lighthouse Agentic Browsing, WebMCP, llms.txt), backlinks, local SEO, e-commerce, international SEO, Google APIs, and PDF/Excel reporting. 9 optional extensions for live SEO data.",
       "language": "Python",
       "language_color": "#3572A5",
-      "stars": 23722,
+      "stars": 23729,
       "forks": 3186,
-      "stars_week": 3516
+      "stars_period": 3516
     },
     {
       "rank": 4,
@@ -53,9 +54,9 @@
       "description": "The design vocabulary for your coding agent. Steer with polish and bolder, review with critique and audit, catch AI slop before it ships.",
       "language": "Rust",
       "language_color": "#dea584",
-      "stars": 94252,
-      "forks": 5567,
-      "stars_week": 7283
+      "stars": 94284,
+      "forks": 5568,
+      "stars_period": 7283
     },
     {
       "rank": 5,
@@ -66,9 +67,9 @@
       "description": "A single CLAUDE.md file to improve Claude Code behavior, derived from Andrej Karpathy's observations on LLM coding pitfalls.",
       "language": "",
       "language_color": "",
-      "stars": 226212,
-      "forks": 22590,
-      "stars_week": 4293
+      "stars": 226219,
+      "forks": 22591,
+      "stars_period": 4293
     },
     {
       "rank": 6,
@@ -79,9 +80,9 @@
       "description": "TradingAgents: Multi-Agents LLM Financial Trading Framework",
       "language": "Python",
       "language_color": "#3572A5",
-      "stars": 118135,
-      "forks": 22593,
-      "stars_week": 5322
+      "stars": 118139,
+      "forks": 22592,
+      "stars_period": 5322
     },
     {
       "rank": 7,
@@ -92,9 +93,9 @@
       "description": "An agentic skills framework & software development methodology that works.",
       "language": "Shell",
       "language_color": "#89e051",
-      "stars": 307948,
-      "forks": 27388,
-      "stars_week": 4655
+      "stars": 307967,
+      "forks": 27389,
+      "stars_period": 4655
     },
     {
       "rank": 8,
@@ -105,9 +106,9 @@
       "description": "Open source repository of plugins primarily intended for knowledge workers to use in Claude Cowork",
       "language": "Python",
       "language_color": "#3572A5",
-      "stars": 33760,
+      "stars": 33762,
       "forks": 3713,
-      "stars_week": 2612
+      "stars_period": 2612
     },
     {
       "rank": 9,
@@ -118,9 +119,9 @@
       "description": "Agent skills that give coding agents taste: art direction, reference images and a browser check instead of generic AI pages",
       "language": "JavaScript",
       "language_color": "#f1e05a",
-      "stars": 105082,
+      "stars": 105092,
       "forks": 7107,
-      "stars_week": 3940
+      "stars_period": 3940
     },
     {
       "rank": 10,
@@ -131,9 +132,9 @@
       "description": "A collection of agent skills that help you build great interfaces.",
       "language": "Markdown",
       "language_color": "#083fa1",
-      "stars": 9103,
+      "stars": 9104,
       "forks": 347,
-      "stars_week": 776
+      "stars_period": 776
     },
     {
       "rank": 11,
@@ -146,7 +147,7 @@
       "language_color": "#3178c6",
       "stars": 80064,
       "forks": 9394,
-      "stars_week": 1930
+      "stars_period": 1930
     }
   ]
 }

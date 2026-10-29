@@ -2,10 +2,13 @@ name: Update GitHub Trending
 
 on:
   schedule:
-    # 每周日 14:00 UTC（北京时间周日 22:00）
+    # 周榜：每周日 14:00 UTC = 北京时间周日 22:00
     # GitHub 的 since=weekly 是「抓取时刻往前 7 天」的滚动窗口，
-    # 放在周日晚上抓，覆盖的正好是上周一 → 本周日，符合自然周语义。
+    # 放在周日晚上抓，覆盖的正好是上周一 → 本周日。
     - cron: "0 14 * * 0"
+    # 月榜：每月 1 日 00:00 UTC = 北京时间 1 日 08:00
+    # since=monthly 是「往前 30 天」的滚动窗口，1 号早上抓近似上月整月。
+    - cron: "0 0 1 * *"
   workflow_dispatch:
 
 permissions:
@@ -25,10 +28,15 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Fetch weekly snapshot
-        run: python scripts/fetch_trending.py
+      - name: Fetch weekly trending
+        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 14 * * 0'
+        run: python scripts/fetch_trending.py --since weekly
 
-      - name: Rebuild monthly / yearly rankings
+      - name: Fetch monthly trending
+        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 0 1 * *'
+        run: python scripts/fetch_trending.py --since monthly
+
+      - name: Rebuild yearly rankings and index
         run: python scripts/build_rankings.py
 
       - name: Commit data

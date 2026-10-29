@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-"""把周快照聚合成月榜 / 年榜，并生成索引文件。
+"""聚合产物 + 索引文件。
 
-口径：榜单按「上榜各周的 star 新增之和」排序（stars_week 累加），
-     并记录上榜次数与最高单周表现。周榜是唯一事实来源，聚合结果可随时重建。
+周榜、月榜都直接来自 GitHub 官方页面；GitHub 没有「年度」榜，
+所以年榜由当年的月度快照聚合（各月 star 新增累加），口径已在页面标注。
 
 输出：
-    data/trending/index.json
-    data/trending/monthly/YYYY-MM.json
     data/trending/yearly/YYYY.json
+    data/trending/index.json
 """
 import json
 import sys
@@ -21,25 +20,29 @@ YEARLY = DATA / "yearly"
 LIMIT = 50
 
 
-def load_weeks() -> list[dict]:
-    files = sorted(WEEKLY.glob("*.json"))
-    weeks = []
-    for path in files:
+def read_dir(path: Path) -> list[dict]:
+    items = []
+    for file in sorted(path.glob("*.json")):
         try:
-            data = json.loads(path.read_text(encoding="utf-8"))
+            data = json.loads(file.read_text(encoding="utf-8"))
         except (json.JSONDecodeError, OSError) as exc:
-            print(f"[build] 跳过损坏文件 {path.name}: {exc}", file=sys.stderr)
+            print(f"[build] 跳过损坏文件 {file.name}: {exc}", file=sys.stderr)
             continue
         if data.get("repos"):
-            weeks.append(data)
-    weeks.sort(key=lambda w: w["captured_at"])
-    return weeks
+            items.append(data)
+    return items
 
 
-def aggregate(weeks: list[dict], limit: int = LIMIT) -> list[dict]:
+def write_json(path: Path, payload: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"[build] {path.relative_to(ROOT)}")
+
+
+def aggregate_months(months: list[dict], limit: int = LIMIT) -> list[dict]:
     bucket: dict[str, dict] = {}
-    for week in weeks:
-        for repo in week["repos"]:
+    for month in months:
+        for repo in month["repos"]:
             key = repo["full_name"]
             item = bucket.get(key)
             if item is None:
@@ -52,18 +55,16 @@ def aggregate(weeks: list[dict], limit: int = LIMIT) -> list[dict]:
                     "language": repo["language"],
                     "language_color": repo["language_color"],
                     "stars": repo["stars"],
-                    "stars_week_total": 0,
-                    "stars_week_max": 0,
+                    "stars_period_total": 0,
                     "appearances": 0,
                     "best_rank": repo["rank"],
-                    "weeks": [],
+                    "months": [],
                 }
                 bucket[key] = item
-            item["stars_week_total"] += repo["stars_week"]
-            item["stars_week_max"] = max(item["stars_week_max"], repo["stars_week"])
+            item["stars_period_total"] += repo["stars_period"]
             item["appearances"] += 1
             item["best_rank"] = min(item["best_rank"], repo["rank"])
-            item["weeks"].append(week["captured_at"])
+            item["months"].append(month["period"])
             item["stars"] = max(item["stars"], repo["stars"])
             if repo["description"]:
                 item["description"] = repo["description"]
@@ -73,7 +74,7 @@ def aggregate(weeks: list[dict], limit: int = LIMIT) -> list[dict]:
 
     ranked = sorted(
         bucket.values(),
-        key=lambda r: (r["stars_week_total"], r["stars_week_max"], r["stars"]),
+        key=lambda r: (r["stars_period_total"], r["stars"]),
         reverse=True,
     )[:limit]
     for i, repo in enumerate(ranked, 1):
@@ -81,67 +82,59 @@ def aggregate(weeks: list[dict], limit: int = LIMIT) -> list[dict]:
     return ranked
 
 
-def write_json(path: Path, payload: dict) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
-    print(f"[build] {path.relative_to(ROOT)}")
-
-
 def main() -> int:
-    weeks = load_weeks()
-    if not weeks:
-        print("[build] data/trending/weekly 下没有快照，先跑 fetch_trending.py", file=sys.stderr)
+    weeks = read_dir(WEEKLY)
+    months = read_dir(MONTHLY)
+
+    if not weeks and not months:
+        print("[build] 没有任何快照，先跑 fetch_trending.py", file=sys.stderr)
         return 1
 
-    by_month: dict[str, list[dict]] = {}
     by_year: dict[str, list[dict]] = {}
-    for week in weeks:
-        day = week["captured_at"]
-        by_month.setdefault(day[:7], []).append(week)
-        by_year.setdefault(day[:4], []).append(week)
+    for month in months:
+        by_year.setdefault(month["period"][:4], []).append(month)
 
-    for period, items in sorted(by_month.items()):
+    for year, items in sorted(by_year.items()):
+        items.sort(key=lambda m: m["period"])
         write_json(
-            MONTHLY / f"{period}.json",
+            YEARLY / f"{year}.json",
             {
-                "period": period,
-                "kind": "monthly",
-                "weeks": len(items),
-                "updated_at": items[-1]["captured_at"],
-                "source": items[-1]["source"],
-                "repos": aggregate(items),
-            },
-        )
-
-    for period, items in sorted(by_year.items()):
-        write_json(
-            YEARLY / f"{period}.json",
-            {
-                "period": period,
+                "period": year,
                 "kind": "yearly",
-                "weeks": len(items),
+                "months": len(items),
+                "month_labels": [m["period"] for m in items],
                 "updated_at": items[-1]["captured_at"],
-                "source": items[-1]["source"],
-                "repos": aggregate(items),
+                "note": "由当年的官方月度榜聚合，各月 star 新增累加",
+                "repos": aggregate_months(items),
             },
         )
+
+    updated = max(
+        [w["captured_at"] for w in weeks] + [m["captured_at"] for m in months]
+    )
 
     write_json(
         DATA / "index.json",
         {
-            "updated_at": weeks[-1]["captured_at"],
-            "source": weeks[-1]["source"],
+            "updated_at": updated,
             "weeks": [
                 {
-                    "date": w["captured_at"],
+                    "date": w["period"],
+                    "captured_at": w["captured_at"],
                     "count": len(w["repos"]),
                     "top": w["repos"][0]["full_name"] if w["repos"] else "",
                 }
-                for w in reversed(weeks)
+                for w in sorted(weeks, key=lambda x: x["period"], reverse=True)
             ],
-            "months": sorted(by_month.keys(), reverse=True),
+            "months": [
+                {
+                    "period": m["period"],
+                    "captured_at": m["captured_at"],
+                    "count": len(m["repos"]),
+                    "top": m["repos"][0]["full_name"] if m["repos"] else "",
+                }
+                for m in sorted(months, key=lambda x: x["period"], reverse=True)
+            ],
             "years": sorted(by_year.keys(), reverse=True),
         },
     )

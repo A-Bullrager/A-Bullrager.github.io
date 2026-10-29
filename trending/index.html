@@ -229,8 +229,8 @@ footer{padding:32px 0 48px;border-top:1px solid var(--line)}
   <p class="sub">每周抓一次官方 Trending 周榜，把快照存进自己的仓库。周榜看当下，月榜年榜看谁真的留住了注意力。</p>
   <div class="meta-line">
     <span>更新于 <b id="mUpdated">—</b></span>
-    <span>已收录 <b id="mWeeks">—</b> 期</span>
-    <span>数据自 <b id="mSince">—</b> 起</span>
+    <span>周榜 <b id="mWeeks">—</b> 期</span>
+    <span>月榜 <b id="mMonths">—</b> 期</span>
   </div>
 </header>
 
@@ -254,7 +254,7 @@ footer{padding:32px 0 48px;border-top:1px solid var(--line)}
     <p>周榜每周日晚上自动抓取一次，攒够之后这里会自动出现月榜与年榜。</p>
   </div>
   <div class="foot-note">
-    <b>数据口径</b>：来源为 GitHub 官方 <a href="https://github.com/trending?since=weekly" target="_blank" rel="noopener">Trending 周榜</a>，每周日 22:00（北京时间）自动抓取并提交快照，不修改原始数值。月榜 / 年榜由周快照累加得出——每多一周，榜单才更接近真实热度，收录期数少于 4 期时仅供参考。
+    <b>数据口径</b>：周榜、月榜均直接来自 GitHub 官方 <a href="https://github.com/trending?since=weekly" target="_blank" rel="noopener">Trending</a>（`since=weekly` / `since=monthly`），不修改任何数值。周榜每周日 22:00 抓取，对应上周一至周日；月榜每月 1 号抓取，对应上一个自然月。GitHub 没有官方年度榜，年榜由当年的月度快照聚合，仅在页面内计算。
   </div>
 </main>
 
@@ -272,7 +272,7 @@ footer{padding:32px 0 48px;border-top:1px solid var(--line)}
 
   var elUpdated = document.getElementById('mUpdated');
   var elWeeks = document.getElementById('mWeeks');
-  var elSince = document.getElementById('mSince');
+  var elMonths = document.getElementById('mMonths');
   var elList = document.getElementById('list');
   var elNote = document.getElementById('note');
   var elEmpty = document.getElementById('empty');
@@ -291,7 +291,7 @@ footer{padding:32px 0 48px;border-top:1px solid var(--line)}
   function periods(){
     if (!state.index) return [];
     if (state.kind === 'week') return state.index.weeks.map(function(w){ return w.date; });
-    if (state.kind === 'month') return state.index.months.slice();
+    if (state.kind === 'month') return state.index.months.map(function(m){ return m.period; });
     return state.index.years.slice();
   }
 
@@ -336,7 +336,9 @@ footer{padding:32px 0 48px;border-top:1px solid var(--line)}
       a.target = '_blank';
       a.rel = 'noopener';
 
-      var delta = state.kind === 'week' ? r.stars_week : r.stars_week_total;
+      var delta = state.kind === 'year'
+        ? (r.stars_period_total || 0)
+        : (r.stars_period || 0);
       var deltaLabel = '+' + fmt(delta);
 
       var meta = [];
@@ -344,8 +346,8 @@ footer{padding:32px 0 48px;border-top:1px solid var(--line)}
         meta.push('<span class="lg"><i class="dot" style="background:' + (r.language_color || 'var(--muted-2)') + '"></i>' + r.language + '</span>');
       }
       meta.push('<span>' + fmt(r.stars) + ' stars</span>');
-      if (state.kind !== 'week'){
-        meta.push('<span>上榜 ' + r.appearances + ' 次</span>');
+      if (state.kind === 'year'){
+        meta.push('<span>上榜 ' + r.appearances + ' 个月</span>');
       }
 
       a.innerHTML =
@@ -368,14 +370,17 @@ footer{padding:32px 0 48px;border-top:1px solid var(--line)}
     });
   }
 
-  function setNote(extra){
-    var label = state.kind === 'week' ? '本期' : (state.kind === 'month' ? '本月' : '年度');
-    var parts = [label + ' ' + state.period, '共 ' + state.items.length + ' 个仓库'];
-    if (state.kind !== 'week'){
-      parts.push('覆盖 ' + state.weeksCount + ' 期周榜');
-      if (state.weeksCount < 2) parts.push('样本仍在累积');
+  function setNote(){
+    var parts;
+    if (state.kind === 'week'){
+      parts = ['本期 ' + state.period, '共 ' + state.items.length + ' 个仓库'];
+    } else if (state.kind === 'month'){
+      parts = ['本月 ' + state.period, '共 ' + state.items.length + ' 个仓库',
+               '官方月度榜', '截至 ' + (state.captured || state.period)];
+    } else {
+      parts = ['年度 ' + state.period, '共 ' + state.items.length + ' 个仓库',
+               '由 ' + (state.monthsCount || 1) + ' 期官方月榜聚合'];
     }
-    if (extra) parts.push(extra);
     elNote.textContent = parts.join(' · ');
   }
 
@@ -383,12 +388,14 @@ footer{padding:32px 0 48px;border-top:1px solid var(--line)}
     state.period = period;
     return fetchJSON(pathFor(state.kind, period)).then(function(data){
       state.items = data.repos || [];
-      state.weeksCount = data.weeks || 1;
-      setNote('');
+      state.captured = data.captured_at || period;
+      state.monthsCount = data.months || 1;
+      setNote();
       render();
     }).catch(function(){
       state.items = [];
-      state.weeksCount = 0;
+      state.captured = period;
+      state.monthsCount = 0;
       elNote.textContent = '';
       render();
     });
@@ -435,8 +442,8 @@ footer{padding:32px 0 48px;border-top:1px solid var(--line)}
   fetchJSON(BASE + 'index.json').then(function(index){
     state.index = index;
     elUpdated.textContent = index.updated_at;
-    elWeeks.textContent = index.weeks.length;
-    elSince.textContent = index.weeks.length ? index.weeks[index.weeks.length - 1].date : '—';
+    elWeeks.textContent = (index.weeks || []).length;
+    elMonths.textContent = (index.months || []).length;
     switchKind('week');
   }).catch(function(){
     elNote.textContent = '数据索引加载失败，请稍后刷新。';
