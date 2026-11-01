@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-29",
+  "updated_at": "2026-11-01",
   "weeks": [
     {
       "date": "2026-10-29",
@@ -11,7 +11,7 @@
   "months": [
     {
       "period": "2026-10",
-      "captured_at": "2026-10-29",
+      "captured_at": "2026-11-01",
       "count": 19,
       "top": "cloudflare/security-audit-skill"
     }
